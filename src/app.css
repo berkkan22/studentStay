@@ -2,6 +2,19 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 16px;
+}
+
 .init {
 	all: revert;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
