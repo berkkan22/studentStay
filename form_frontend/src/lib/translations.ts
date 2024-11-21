@@ -19,6 +19,12 @@ export default {
     "email": "E-Mail Adresse",
     "address": "Adresse",
     "vorwahl": "+49",
+    "popup_title_success": "Registrierung war erfolgreich",
+    "popup_body_success": "Ihre Registrierung war erfolgreich. Vielen Danke!",
+    "popup_close_success": "Schließen",
+    "popup_title_error": "Registrierung war nicht erfolgreich",
+    "popup_body_error": "Ihre Registrierung war nicht erfolgreich. Bitte versuchen Sie es erneut!",
+    "popup_close_error": "Schließen"
   },
   Tr: {
     "language": "Türkçe",
@@ -38,6 +44,11 @@ export default {
     "email": "Mail Adresi",
     "address": "Asli Ikamet Adresi",
     "vorwahl": "+90",
-
+    "popup_title_success": "Kayıt Başarılı",
+    "popup_body_success": "Kaydınız başarıyla tamamlandı. Teşekkür ederiz!",
+    "popup_close_success": "Kapat",
+    "popup_title_error": "Kayıt Başarısız",
+    "popup_body_error": "Kaydınız başarısız oldu. Lütfen tekrar deneyiniz!",
+    "popup_close_error": "Kapat"
   },
 };
