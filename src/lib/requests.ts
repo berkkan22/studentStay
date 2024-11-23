@@ -88,7 +88,9 @@ export async function getStudentsWithRooms() {
     };
   });
 
-  const studentsWithoutRooms = students.filter(student => !studentsWithRooms.some(studentRoom => studentRoom.student.id === student.id) && student.isPassive === false);
+  const studentsWithoutRooms = students
+    .filter(student => !studentsWithRooms.some(studentRoom => studentRoom.student.id === student.id) && student.isPassive === false)
+    .sort((a, b) => new Date(a.submit_date).getTime() - new Date(b.submit_date).getTime());
 
   sortedStudentsWithRooms.push({
     location: "Warteliste",
@@ -136,6 +138,11 @@ export async function updateStudentRoom(studentId: number, roomId: number) {
     throw new Error('Network response was not ok');
   }
 
+  if (res["status"] === "fail") {
+    console.log(res);
+    throw new Error(res["message"]);
+  }
+
   console.log(res);
   return res;
 }
@@ -149,11 +156,62 @@ export async function setStudentPassiv(studentId: number) {
     body: JSON.stringify({ studentId })
   });
 
+  const res = await response.json();
+
   if (!response.ok) {
     throw new Error('Network response was not ok');
   }
 
+  if (res["status"] === "fail") {
+    console.log(res);
+    throw new Error(res["message"]);
+  }
+
+  console.log(res);
+  return res;
+}
+
+export async function setStudentAktive(studentId: number) {
+  const response = await fetch(`http://localhost:8000/setStudentAktiv`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ studentId })
+  });
   const res = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  if (res["status"] === "fail") {
+    console.log(res);
+    throw new Error(res["message"]);
+  }
+
+  console.log(res);
+  return res;
+}
+
+export async function updateStudent(studentId: number, updateFields: Partial<Student>) {
+  const response = await fetch(`http://localhost:8000/updateStudent`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ studentId, updateFields })
+  });
+  const res = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  if (res["status"] === "fail") {
+    console.log(res);
+    throw new Error(res["message"]);
+  }
+
   console.log(res);
   return res;
 }

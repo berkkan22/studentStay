@@ -192,3 +192,62 @@ async def set_student_passiv(data: Request):
         return {"status": "success", "message": "Student set to passive successfully"}
     except Exception as e:
         return {"status": "fail", "message": str(e)}
+
+
+@app.post("/setStudentAktiv")
+async def set_student_aktiv(data: Request):
+    try:
+        data = await data.json()
+        student_id = data["studentId"]
+
+        conn = psycopg2.connect(**config)
+        cur = conn.cursor()
+
+        cur.execute("""
+            UPDATE student
+            SET passiv = FALSE
+            WHERE id = %s
+        """, (student_id,))
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        return {"status": "success", "message": "Student set to active successfully"}
+    except Exception as e:
+        return {"status": "fail", "message": str(e)}
+
+
+@app.post("/updateStudent")
+async def update_student(data: Request):
+    try:
+        data = await data.json()
+        student_id = data["studentId"]
+        update_fields = data["updateFields"]
+        print(update_fields)
+
+        if not update_fields:
+            return {"status": "fail", "message": "No fields to update"}
+
+        set_clause = ", ".join([f"{key} = %s" for key in update_fields.keys()])
+        values = list(update_fields.values())
+        values.append(student_id)
+
+        conn = psycopg2.connect(**config)
+        cur = conn.cursor()
+
+        cur.execute(f"""
+            UPDATE student
+            SET {set_clause}
+            WHERE id = %s
+        """, values)
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        return {"status": "success", "message": "Student updated successfully"}
+    except Exception as e:
+        return {"status": "fail", "message": str(e)}

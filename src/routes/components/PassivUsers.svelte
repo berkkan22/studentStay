@@ -24,10 +24,19 @@
 		selectedStudent = studentWithRoom;
 		showModal = true;
 	}
+
+	function closeModal() {
+		showModal = false;
+		selectedStudent = null;
+	}
 </script>
 
-<EditModal {showModal} bind:selectedStudent on:refresh={() => dispatch('refresh')} />
-
+<EditModal
+	bind:showModal
+	bind:selectedStudent
+	on:close={closeModal}
+	on:refresh={() => dispatch('refresh')}
+/>
 <Accordion>
 	<AccordionItem>
 		<span slot="header"
@@ -40,10 +49,23 @@
 				<TableHeadCell>
 					<span class="sr-only">Edit</span>
 				</TableHeadCell>
-				<TableHeadCell>Product name</TableHeadCell>
-				<TableHeadCell>Color</TableHeadCell>
-				<TableHeadCell>Category</TableHeadCell>
-				<TableHeadCell>Price</TableHeadCell>
+
+				<TableHeadCell>Isim</TableHeadCell>
+				<TableHeadCell>Soyisim</TableHeadCell>
+				<TableHeadCell>Dogum Tarihi</TableHeadCell>
+				<TableHeadCell>Aldigi Burs Ücreti</TableHeadCell>
+				<TableHeadCell>Kira Bedeli</TableHeadCell>
+				<TableHeadCell>Eve Giris</TableHeadCell>
+				<TableHeadCell>Evden ayrilis</TableHeadCell>
+				<TableHeadCell>Sözlesme bitis</TableHeadCell>
+				<TableHeadCell>Kotenjan (Hoca)</TableHeadCell>
+				<TableHeadCell>Üniversite adi</TableHeadCell>
+				<TableHeadCell>Bölüm</TableHeadCell>
+				<TableHeadCell>Sinif / Semester</TableHeadCell>
+				<TableHeadCell>Türkiyede Üniversite</TableHeadCell>
+				<TableHeadCell>Cep No</TableHeadCell>
+				<TableHeadCell>Mail Adresi</TableHeadCell>
+				<TableHeadCell>Asil ikamet adresi</TableHeadCell>
 			</TableHead>
 			<TableBody tableBodyClass="divide-y">
 				{#each passivStudents.studentRoom as passivStudent}
@@ -56,10 +78,24 @@
 								on:click={() => editStudent(passivStudent)}>Düzenle</a
 							>
 						</TableBodyCell>
-						<TableBodyCell>{passivStudent.student?.firstname}</TableBodyCell>
-						<TableBodyCell>Black</TableBodyCell>
-						<TableBodyCell>Accessories</TableBodyCell>
-						<TableBodyCell>$99</TableBodyCell>
+						{#if selectedStudent}
+							<TableBodyCell>{selectedStudent.student?.firstname}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.lastname}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.birthday}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.bafog}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.rent}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.homeEntrance}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.homeExit}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.contract}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.KotenjanHoca}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.university}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.course}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.semester}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.universityTr}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.telephone}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.email}</TableBodyCell>
+							<TableBodyCell>{selectedStudent.student?.address}</TableBodyCell>
+						{/if}
 					</TableBodyRow>
 				{/each}
 			</TableBody>

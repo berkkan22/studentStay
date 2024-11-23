@@ -25,8 +25,7 @@
 	let errorMessage = '';
 	let showProcessIndicator = false;
 
-  const dispatch = createEventDispatcher();
-
+	const dispatch = createEventDispatcher();
 
 	async function editStudent(studentWithRoom: StudentRoom) {
 		roomLocations = await getAllRoomLocations();
@@ -38,24 +37,24 @@
 	function closeModal() {
 		editModal = false;
 		newRoom = '';
+		errorMessage = '';
 	}
 
 	async function updateRoom() {
 		showProcessIndicator = true;
-		console.log('Update room');
-		console.log(newRoom);
-		console.log(selectedStudent);
-		const res = await updateStudentRoom(selectedStudent.student?.id, newRoom);
-		if (res['status'] === 'fail') {
-			showProcessIndicator = false;
-			console.log(res['message']);
-			errorMessage = res['message'];
-		} else {
-			showProcessIndicator = false;
-			console.log(res['message']);
-			closeModal();
-      dispatch('refresh');
 
+		try {
+			const res = await updateStudentRoom(selectedStudent.student?.id, newRoom);
+			closeModal();
+			dispatch('refresh');
+		} catch (error) {
+			if ((error = 'No available room found for the given location')) {
+				errorMessage = 'Odalar dolu. Lütfen başka bir oda seçin.';
+			} else {
+				errorMessage = 'Failed to update room. ' + error;
+			}
+		} finally {
+			showProcessIndicator = false;
 		}
 	}
 </script>
@@ -132,6 +131,17 @@
 						<TableBodyCell>{studentWithRoom.student?.birthday}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.bafog}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.rent}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.homeEntrance}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.homeExit}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.contract}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.KotenjanHoca}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.university}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.course}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.semester}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.universityTr}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.telephone}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.email}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.address}</TableBodyCell>
 					</TableBodyRow>
 				{/each}
 			</TableBody>

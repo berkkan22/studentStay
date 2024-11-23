@@ -1,0 +1,45 @@
+services:
+  backend:
+    container_name: student_stay_backend
+    build: 
+      context: ./backend/
+      dockerfile: Dockerfile
+    ports:
+      - "29595:80"
+    networks:
+      projects:
+        ipv4_address: 192.169.4.1
+      intern:
+        ipv4_address: 192.168.48.12
+    restart: unless-stopped
+
+
+  frontend:
+    container_name: student_stay_frontend
+    build: 
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "45637:3000"
+    networks:
+      projects:
+        ipv4_address: 192.169.4.2
+    restart: unless-stopped
+
+  form_frontend:
+    container_name: student_stay_from_frontend
+    build: 
+      context: ./form_frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "58240:3000"
+    networks:
+      projects:
+        ipv4_address: 192.169.4.2
+    restart: unless-stopped
+
+networks:
+  projects:
+    external: true
+  intern:
+    external: true

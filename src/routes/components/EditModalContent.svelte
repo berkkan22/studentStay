@@ -2,6 +2,28 @@
 	import type { StudentRoom } from '$lib/model';
 
 	export let selectedStudent: StudentRoom | null = null;
+
+	export function getUpdatedFields() {
+		const updatedFields = {
+			firstname: (document.getElementById('firstname') as HTMLInputElement).value,
+			lastname: (document.getElementById('lastname') as HTMLInputElement).value,
+			birthday: (document.getElementById('birthday') as HTMLInputElement).value,
+			bafog: (document.getElementById('bafog') as HTMLInputElement).value,
+			rent: (document.getElementById('rent') as HTMLInputElement).value,
+			home_entrance: (document.getElementById('homeEntrance') as HTMLInputElement).value,
+			home_exit: (document.getElementById('homeExit') as HTMLInputElement).value,
+			contract: (document.getElementById('contract') as HTMLInputElement).value,
+			// KotenjanHoca: (document.getElementById('KotenjanHoca') as HTMLInputElement).value,
+			university: (document.getElementById('university') as HTMLInputElement).value,
+			course: (document.getElementById('course') as HTMLInputElement).value,
+			semester: (document.getElementById('semester') as HTMLInputElement).value.match(/\d+/)[0],
+			university_tr: (document.getElementById('universityTr') as HTMLInputElement).value,
+			telephone: (document.getElementById('telephone') as HTMLInputElement).value,
+			email: (document.getElementById('email') as HTMLInputElement).value,
+			address: (document.getElementById('address') as HTMLInputElement).value
+		};
+		return updatedFields;
+	}
 </script>
 
 {#if selectedStudent}
@@ -67,7 +89,7 @@
 				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">Home Entrance</label
 			>
 			<input
-				type="text"
+				type="date"
 				id="homeEntrance"
 				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
 				bind:value={selectedStudent.student.homeEntrance}
@@ -78,7 +100,7 @@
 				>Home exit</label
 			>
 			<input
-				type="text"
+				type="date"
 				id="homeExit"
 				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
 				bind:value={selectedStudent.student.homeExit}

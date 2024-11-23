@@ -32,48 +32,23 @@
 	export function closeModal() {
 		showModal = false;
 		selectedStudent = null;
-		console.log('Close modal');
-		console.log(showModal);
 	}
 
-	function saveStudent() {
-		console.log(selectedStudent);
-	}
-
-	async function passiv() {
-		showProcessIndicator = true;
-		const res = await setStudentPassiv(selectedStudent.student.id);
-		closeModal();
-		showProcessIndicator = false;
-		dispatch('refresh');
-	}
-
-	async function aktive() {
-		// TODO: need to add room
-		showProcessIndicator = true;
-		const res = await setStudentPassiv(selectedStudent.student.id);
-		closeModal();
-		showProcessIndicator = false;
-		dispatch('refresh');
-	}
+	// async function passiv() {
+	// 	showProcessIndicator = true;
+	// 	const res = await setStudentPassiv(selectedStudent.student.id);
+	// 	closeModal();
+	// 	showProcessIndicator = false;
+	// 	dispatch('refresh');
+	// }
 </script>
 
-<Modal title="Edit Student" bind:open={showModal} on:close={() => closeModal()}>
-	{#if showProcessIndicator}
-		<div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
-			<div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
-		</div>
-	{/if}
-	{#if selectedStudent?.student?.isPassive}
-		<Button class="mr-2" color="green" on:click={() => aktive()}>Set Aktive</Button>
-	{:else}
-		<Button class="mr-2" color="yellow" on:click={() => passiv()}>Passive</Button>
-	{/if}
-	<Button color="red">Delete</Button>
-	<EditModalContent {selectedStudent} />
-	<Button on:click={saveStudent}>Save</Button>
-	<Button color="alternative" on:click={() => closeModal()}>Cancel</Button>
-</Modal>
+<EditModal
+	bind:showModal
+	bind:selectedStudent
+	on:close={closeModal}
+	on:refresh={() => dispatch('refresh')}
+/>
 
 <h1 class="init">{studentWithRooms.location}</h1>
 <Table shadow striped={true} hoverable={true}>
@@ -106,11 +81,12 @@
 				<TableBodyCell>
 					<a
 						href="/"
-						class={studentWithRoom.student.id === -1
+						class={studentWithRoom.student?.id === -1
 							? 'cursor-not-allowed text-gray-400'
 							: 'font-medium text-primary-600 hover:underline dark:text-primary-500'}
-						on:click={studentWithRoom.student.id === -1 ? null : () => editStudent(studentWithRoom)}
-						>Düzenle</a
+						on:click={studentWithRoom.student?.id === -1
+							? null
+							: () => editStudent(studentWithRoom)}>Düzenle</a
 					>
 				</TableBodyCell>
 				<TableBodyCell>{studentWithRoom.room?.roomNumber}</TableBodyCell>
@@ -119,6 +95,17 @@
 				<TableBodyCell>{studentWithRoom.student?.birthday}</TableBodyCell>
 				<TableBodyCell>{studentWithRoom.student?.bafog}</TableBodyCell>
 				<TableBodyCell>{studentWithRoom.student?.rent}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.homeEntrance}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.homeExit}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.contract}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.KotenjanHoca}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.university}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.course}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.semester}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.universityTr}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.telephone}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.email}</TableBodyCell>
+				<TableBodyCell>{studentWithRoom.student?.address}</TableBodyCell>
 			</TableBodyRow>
 		{/each}
 	</TableBody>
