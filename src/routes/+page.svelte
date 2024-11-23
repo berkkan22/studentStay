@@ -30,8 +30,11 @@
 	];
 
 	let studentsWithRooms: SortedStudentsWithRooms[] = [];
+	let loading = true;
+
 	onMount(async () => {
 		studentsWithRooms = await getStudentsWithRooms();
+		loading = false;
 	});
 
 	async function refreshStudentsWithRooms() {
@@ -40,7 +43,12 @@
 </script>
 
 <Header />
-{#if studentsWithRooms.length !== 0}
+{#if loading}
+<div class="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75">
+	<div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900 mb-2"></div>
+	<p>Please wait while rooms are loading...</p>
+</div>
+{:else if studentsWithRooms.length !== 0}
 	<!-- content here -->
 	<WaitingList
 		studentWithRooms={studentsWithRooms[studentsWithRooms.length - 2]}
@@ -66,5 +74,9 @@
 
 	.spacer2 {
 		height: 60px;
+	}
+
+	p {
+		text-align: center;
 	}
 </style>

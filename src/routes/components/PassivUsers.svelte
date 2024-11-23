@@ -78,23 +78,23 @@
 								on:click={() => editStudent(passivStudent)}>Düzenle</a
 							>
 						</TableBodyCell>
-						{#if selectedStudent}
-							<TableBodyCell>{selectedStudent.student?.firstname}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.lastname}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.birthday}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.bafog}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.rent}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.homeEntrance}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.homeExit}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.contract}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.KotenjanHoca}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.university}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.course}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.semester}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.universityTr}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.telephone}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.email}</TableBodyCell>
-							<TableBodyCell>{selectedStudent.student?.address}</TableBodyCell>
+						{#if passivStudent}
+							<TableBodyCell>{passivStudent.student?.firstname}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.lastname}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.birthday}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.bafog}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.rent}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.homeEntrance}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.homeExit}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.contract}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.KotenjanHoca}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.university}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.course}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.semester}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.universityTr}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.telephone}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.email}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.address}</TableBodyCell>
 						{/if}
 					</TableBodyRow>
 				{/each}
