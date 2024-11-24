@@ -7,7 +7,6 @@
 	import { onMount } from 'svelte';
 	import { config } from '$lib/config';
 
-
 	let defaultModal = false;
 	let errorModal = false;
 	let isShowLanguages: boolean = false;
@@ -304,7 +303,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 			>terms and conditions</A
 		>.
 	</Checkbox> -->
-	<Button type="submit">Submit</Button>
+	<Button type="submit">{$t('submit')}</Button>
 </form>
 
 <Modal

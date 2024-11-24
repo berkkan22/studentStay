@@ -24,7 +24,8 @@ export default {
     "popup_close_success": "Schließen",
     "popup_title_error": "Registrierung war nicht erfolgreich",
     "popup_body_error": "Ihre Registrierung war nicht erfolgreich. Bitte versuchen Sie es erneut!",
-    "popup_close_error": "Schließen"
+    "popup_close_error": "Schließen",
+    "submit": "Absenden",
   },
   Tr: {
     "language": "Türkçe",
@@ -49,6 +50,7 @@ export default {
     "popup_close_success": "Kapat",
     "popup_title_error": "Kayıt Başarısız",
     "popup_body_error": "Kaydınız başarısız oldu. Lütfen tekrar deneyiniz!",
-    "popup_close_error": "Kapat"
+    "popup_close_error": "Kapat",
+    "submit": "Gönder",
   },
 };
