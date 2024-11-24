@@ -38,7 +38,6 @@ export const actions = {
       // Assuming the data contains your new cookies
       const newCookies = data.get('cookies') as string; // Example: { userId: '12345', sessionToken: 'abcdefg' }
 
-      console.log('Setting cookies:', newCookies);
       // Set the cookies
       cookies.set('session', newCookies, {
         path: '/',

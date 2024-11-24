@@ -3,6 +3,8 @@
 	import { signOut } from '@auth/sveltekit/client';
 	import { Button } from 'flowbite-svelte';
 	import { onMount } from 'svelte';
+	import LanguageSwitcher from './LanguageSwitcher.svelte';
+	import { t } from '$lib/i18n';
 
 	let loggedIn: boolean = false;
 
@@ -24,11 +26,14 @@
 
 <header>
 	<h2 class="init">Student Stay</h2>
-	{#if loggedIn}
-		<Button outline color="blue" on:click={logout}>Logout</Button>
-	{:else}
-		<Button color="blue" on:click={login}>Login</Button>
-	{/if}
+	<div class="right">
+		<LanguageSwitcher />
+		{#if loggedIn}
+			<Button outline color="blue" on:click={logout}>{$t('logout')}</Button>
+		{:else}
+			<Button color="blue" on:click={login}>{$t('login')}</Button>
+		{/if}
+	</div>
 </header>
 
 <style>
@@ -37,5 +42,11 @@
 		justify-content: space-between;
 		align-items: flex-end;
 		padding: 0 1rem;
+	}
+
+	.right {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
 	}
 </style>

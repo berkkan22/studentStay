@@ -89,7 +89,7 @@ def verify_jwt(token, public_key):
     except jwt.InvalidSignatureError:
         # logger.error("Invalid signature")
         return False
-    except Ijwt.nvalidTokenError as e:
+    except jwt.InvalidTokenError as e:
         # logger.error(f"Invalid token {e}")
         return False
 

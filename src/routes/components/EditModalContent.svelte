@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { t } from '$lib/i18n';
 	import type { StudentRoom } from '$lib/model';
 
 	export let selectedStudent: StudentRoom | null = null;
@@ -30,7 +31,7 @@
 	<div class="space-y-6">
 		<div>
 			<label for="firstname" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>First Name</label
+				>{$t('first_name')}</label
 			>
 			<input
 				type="text"
@@ -41,7 +42,7 @@
 		</div>
 		<div>
 			<label for="lastname" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Last Name</label
+				>{$t('last_name')}</label
 			>
 			<input
 				type="text"
@@ -52,7 +53,7 @@
 		</div>
 		<div>
 			<label for="birthday" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Birthday</label
+				>{$t('birthday')}</label
 			>
 			<input
 				type="date"
@@ -63,7 +64,7 @@
 		</div>
 		<div>
 			<label for="bafog" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Bafog</label
+				>{$t('bafog')}</label
 			>
 			<input
 				type="number"
@@ -74,7 +75,7 @@
 		</div>
 		<div>
 			<label for="rent" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Rent</label
+				>{$t('rent')}</label
 			>
 			<input
 				type="number"
@@ -86,7 +87,8 @@
 		<div>
 			<label
 				for="homeEntrance"
-				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">Home Entrance</label
+				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('home_entrance')}</label
 			>
 			<input
 				type="date"
@@ -97,7 +99,7 @@
 		</div>
 		<div>
 			<label for="homeExit" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Home exit</label
+				>{$t('home_exit')}</label
 			>
 			<input
 				type="date"
@@ -108,7 +110,7 @@
 		</div>
 		<div>
 			<label for="contract" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Contract</label
+				>{$t('contract')}</label
 			>
 			<input
 				type="date"
@@ -120,7 +122,7 @@
 		<div>
 			<label
 				for="KotenjanHoca"
-				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">Kotenjan Hoca</label
+				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">Kotenjan</label
 			>
 			<input
 				type="text"
@@ -132,7 +134,8 @@
 		<div>
 			<label
 				for="university"
-				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">University</label
+				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('university')}</label
 			>
 			<input
 				type="text"
@@ -143,7 +146,7 @@
 		</div>
 		<div>
 			<label for="course" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Course</label
+				>{$t('course')}</label
 			>
 			<input
 				type="text"
@@ -154,7 +157,7 @@
 		</div>
 		<div>
 			<label for="semester" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Semester</label
+				>{$t('semester')}</label
 			>
 			<input
 				type="text"
@@ -167,7 +170,7 @@
 			<label
 				for="universityTr"
 				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>University in Turkey</label
+				>{$t('university_tr')}</label
 			>
 			<input
 				type="text"
@@ -178,7 +181,7 @@
 		</div>
 		<div>
 			<label for="telephone" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Telephone</label
+				>{$t('telephone')}</label
 			>
 			<input
 				type="text"
@@ -189,7 +192,7 @@
 		</div>
 		<div>
 			<label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Email</label
+				>{$t('email')}</label
 			>
 			<input
 				type="email"
@@ -200,7 +203,7 @@
 		</div>
 		<div>
 			<label for="address" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>Address</label
+				>{$t('address')}</label
 			>
 			<input
 				type="text"

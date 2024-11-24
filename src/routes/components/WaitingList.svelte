@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { t } from '$lib/i18n';
 	import type { SortedStudentsWithRooms, StudentRoom } from '$lib/model';
 	import { getAllRoomLocations, getStudentsWithRooms, updateStudentRoom } from '$lib/requests';
 	import { studentsWithRooms } from '$lib/store';
@@ -63,7 +64,7 @@
 	}
 </script>
 
-<Modal title="Ada'ya koy" bind:open={editModal} on:close={() => closeModal()}>
+<Modal title={$t('addRoomTitle')} color="form" bind:open={editModal} on:close={() => closeModal()}>
 	{#if showProcessIndicator}
 		<div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
 			<div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
@@ -72,28 +73,30 @@
 
 	<p class="text-base leading-relaxed text-red-500">{errorMessage}</p>
 	<p class="text-base leading-relaxed">
-		<b>{selectedStudent.student?.firstname} {selectedStudent.student?.lastname}</b> hangi odaya koyacaksin?
+		{@html $t('addRommName', {
+			name: `${selectedStudent.student?.firstname} ${selectedStudent.student?.lastname} `
+		})}
 	</p>
 	<select bind:value={newRoom} class="form-select mt-1 block w-full">
 		{#each roomLocations as location}
 			{#if location === 'Select a room'}
-				<option value="" disabled selected hidden>{location}</option>
+				<option value="" disabled selected hidden>{$t('selectRoom')}</option>
 			{:else}
 				<option value={location}>{location}</option>
 			{/if}
 		{/each}
 	</select>
 	<svelte:fragment slot="footer">
-		<Button on:click={() => updateRoom()}>Save</Button>
-		<Button color="alternative" on:click={() => closeModal()}>Abbrechen</Button>
+		<Button on:click={() => updateRoom()}>{$t('add')}</Button>
+		<Button color="alternative" on:click={() => closeModal()}>{$t('cancel')}</Button>
 	</svelte:fragment>
 </Modal>
 
 <div class="spacer"></div>
 <Accordion>
 	<AccordionItem>
-		<span slot="header" class="text-primary-700"
-			>{studentWithRooms.location}
+		<span slot="header" class="text-primary-700">
+			{$t('waitingList')}
 			{#if studentWithRooms.studentRoom.length > 0}
 				<Badge class="ml-2" large color="red">{studentWithRooms.studentRoom.length}</Badge>
 			{/if}
@@ -101,24 +104,24 @@
 		<Table shadow striped={true}>
 			<TableHead>
 				<TableHeadCell>
-					<span class="sr-only">Edit</span>
+					<span class="sr-only">{$t('edit')}</span>
 				</TableHeadCell>
-				<TableHeadCell>Isim</TableHeadCell>
-				<TableHeadCell>Soyisim</TableHeadCell>
-				<TableHeadCell>Dogum Tarihi</TableHeadCell>
-				<TableHeadCell>Aldigi Burs Ücreti</TableHeadCell>
-				<TableHeadCell>Kira Bedeli</TableHeadCell>
-				<TableHeadCell>Eve Giris</TableHeadCell>
-				<TableHeadCell>Evden ayrilis</TableHeadCell>
-				<TableHeadCell>Sözlesme bitis</TableHeadCell>
-				<TableHeadCell>Kotenjan (Hoca)</TableHeadCell>
-				<TableHeadCell>Üniversite adi</TableHeadCell>
-				<TableHeadCell>Bölüm</TableHeadCell>
-				<TableHeadCell>Sinif / Semester</TableHeadCell>
-				<TableHeadCell>Türkiyede Üniversite</TableHeadCell>
-				<TableHeadCell>Cep No</TableHeadCell>
-				<TableHeadCell>Mail Adresi</TableHeadCell>
-				<TableHeadCell>Asil ikamet adresi</TableHeadCell>
+				<TableHeadCell>{$t('first_name')}</TableHeadCell>
+				<TableHeadCell>{$t('last_name')}</TableHeadCell>
+				<TableHeadCell>{$t('birthday')}</TableHeadCell>
+				<TableHeadCell>{$t('bafog')}</TableHeadCell>
+				<TableHeadCell>{$t('rent')}</TableHeadCell>
+				<TableHeadCell>{$t('home_entrance')}</TableHeadCell>
+				<TableHeadCell>{$t('home_exit')}</TableHeadCell>
+				<TableHeadCell>{$t('contract')}</TableHeadCell>
+				<TableHeadCell>Kotenjan</TableHeadCell>
+				<TableHeadCell>{$t('university')}</TableHeadCell>
+				<TableHeadCell>{$t('course')}</TableHeadCell>
+				<TableHeadCell>{$t('semester')}</TableHeadCell>
+				<TableHeadCell>{$t('university_tr')}</TableHeadCell>
+				<TableHeadCell>{$t('telephone')}</TableHeadCell>
+				<TableHeadCell>{$t('email')}</TableHeadCell>
+				<TableHeadCell>{$t('address')}</TableHeadCell>
 			</TableHead>
 			<TableBody tableBodyClass="divide-y">
 				<!-- <TableBodyRow slot="row" let:item> -->
@@ -128,7 +131,7 @@
 							<a
 								href="/"
 								class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-								on:click={() => editStudent(studentWithRoom)}>Ada'ya koy</a
+								on:click={() => editStudent(studentWithRoom)}>{$t('addRoom')}</a
 							>
 						</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.firstname}</TableBodyCell>

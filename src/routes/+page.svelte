@@ -7,22 +7,23 @@
 	import WaitingList from './components/WaitingList.svelte';
 	import PassivUsers from './components/PassivUsers.svelte';
 	import { studentsWithRooms } from '$lib/store';
+	import { getLocaleFromNavigator, locale, t } from '$lib/i18n';
 
 	let loading = true;
 
 	onMount(async () => {
+		$locale = getLocaleFromNavigator();
 		const data = await getStudentsWithRooms();
 		studentsWithRooms.set(data);
 		loading = false;
 	});
-
 </script>
 
 <Header />
 {#if loading}
 	<div class="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75">
 		<div class="mb-2 h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
-		<p>Please wait while rooms are loading...</p>
+		<p>{$t('loading')}</p>
 	</div>
 {:else if $studentsWithRooms.length !== 0}
 	<!-- content here -->

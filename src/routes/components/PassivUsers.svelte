@@ -12,6 +12,7 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 	import EditModal from './EditModal.svelte';
+	import { t } from '$lib/i18n';
 
 	export let passivStudents: SortedStudentsWithRooms;
 
@@ -29,40 +30,36 @@
 	}
 </script>
 
-<EditModal
-	bind:showModal
-	bind:selectedStudent
-	on:close={closeModal}
-/>
+<EditModal bind:showModal bind:selectedStudent on:close={closeModal} />
 <Accordion>
 	<AccordionItem>
 		<span slot="header"
-			>Passiv kisiler {#if passivStudents.studentRoom.length > 0}
+			>{$t('passive')}
+			{#if passivStudents.studentRoom.length > 0}
 				<Badge class="ml-2" large color="yellow">{passivStudents.studentRoom.length}</Badge>
-			{/if}</span
-		>
+			{/if}
+		</span>
 		<Table shadow striped={true}>
 			<TableHead>
 				<TableHeadCell>
-					<span class="sr-only">Edit</span>
+					<span class="sr-only">{$t('edit')}</span>
 				</TableHeadCell>
-
-				<TableHeadCell>Isim</TableHeadCell>
-				<TableHeadCell>Soyisim</TableHeadCell>
-				<TableHeadCell>Dogum Tarihi</TableHeadCell>
-				<TableHeadCell>Aldigi Burs Ücreti</TableHeadCell>
-				<TableHeadCell>Kira Bedeli</TableHeadCell>
-				<TableHeadCell>Eve Giris</TableHeadCell>
-				<TableHeadCell>Evden ayrilis</TableHeadCell>
-				<TableHeadCell>Sözlesme bitis</TableHeadCell>
-				<TableHeadCell>Kotenjan (Hoca)</TableHeadCell>
-				<TableHeadCell>Üniversite adi</TableHeadCell>
-				<TableHeadCell>Bölüm</TableHeadCell>
-				<TableHeadCell>Sinif / Semester</TableHeadCell>
-				<TableHeadCell>Türkiyede Üniversite</TableHeadCell>
-				<TableHeadCell>Cep No</TableHeadCell>
-				<TableHeadCell>Mail Adresi</TableHeadCell>
-				<TableHeadCell>Asil ikamet adresi</TableHeadCell>
+				<TableHeadCell>{$t('first_name')}</TableHeadCell>
+				<TableHeadCell>{$t('last_name')}</TableHeadCell>
+				<TableHeadCell>{$t('birthday')}</TableHeadCell>
+				<TableHeadCell>{$t('bafog')}</TableHeadCell>
+				<TableHeadCell>{$t('rent')}</TableHeadCell>
+				<TableHeadCell>{$t('home_entrance')}</TableHeadCell>
+				<TableHeadCell>{$t('home_exit')}</TableHeadCell>
+				<TableHeadCell>{$t('contract')}</TableHeadCell>
+				<TableHeadCell>Kotenjan</TableHeadCell>
+				<TableHeadCell>{$t('university')}</TableHeadCell>
+				<TableHeadCell>{$t('course')}</TableHeadCell>
+				<TableHeadCell>{$t('semester')}</TableHeadCell>
+				<TableHeadCell>{$t('university_tr')}</TableHeadCell>
+				<TableHeadCell>{$t('telephone')}</TableHeadCell>
+				<TableHeadCell>{$t('email')}</TableHeadCell>
+				<TableHeadCell>{$t('address')}</TableHeadCell>
 			</TableHead>
 			<TableBody tableBodyClass="divide-y">
 				{#each passivStudents.studentRoom as passivStudent}
@@ -72,7 +69,7 @@
 							<a
 								href="/"
 								class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-								on:click={() => editStudent(passivStudent)}>Düzenle</a
+								on:click={() => editStudent(passivStudent)}>{$t('edit')}</a
 							>
 						</TableBodyCell>
 						{#if passivStudent}
