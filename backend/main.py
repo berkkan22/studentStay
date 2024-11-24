@@ -158,7 +158,7 @@ def clearSemester(sem: str):
 
 
 @app.post("/submit")
-async def register_user(user: Request, api_key: str = Depends(get_api_key_http)):
+async def register_user(user: Request):
     try:
         user = await user.json()
         user = user["user"]
