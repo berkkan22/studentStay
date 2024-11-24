@@ -12,14 +12,12 @@
 	});
 
 	function logout() {
-		console.log('logging out');
 		document.cookie = 'session=; Max-Age=0; path=/';
 
 		signOut();
 	}
 
 	function login() {
-		console.log('logging in');
 		goto('/auth');
 	}
 </script>

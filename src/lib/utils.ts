@@ -68,12 +68,9 @@ export async function getValidAccessToken(cookies: any): Promise<{ validAccessTo
   try {
 
     if (isTokenExpired(cookies.access_token)) {
-      console.log('Access token expired, refreshing...');
-      console.log('Cookies:', cookies);
       const newTokens = await getRefreshToken(cookies.refresh_token);
       const newCookies = updateTokens(cookies, newTokens);
       console.log('New cookies:', newCookies);
-      // document.cookie = `session=${JSON.stringify(newCookies)}; path=/; max-age=${60 * 60 * 24}; samesite=lax; secure=true; httponly=false;`;
 
       return { validAccessToken: newTokens.access_token };
     }

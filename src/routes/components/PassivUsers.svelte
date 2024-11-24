@@ -11,11 +11,9 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
 	import EditModal from './EditModal.svelte';
 
 	export let passivStudents: SortedStudentsWithRooms;
-	const dispatch = createEventDispatcher();
 
 	let selectedStudent: StudentRoom | null = null;
 	let showModal = false;
@@ -35,7 +33,6 @@
 	bind:showModal
 	bind:selectedStudent
 	on:close={closeModal}
-	on:refresh={() => dispatch('refresh')}
 />
 <Accordion>
 	<AccordionItem>

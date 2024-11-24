@@ -8,21 +8,14 @@
 	import PassivUsers from './components/PassivUsers.svelte';
 	import { studentsWithRooms } from '$lib/store';
 
-	// let studentsWithRooms: SortedStudentsWithRooms[] = [];
 	let loading = true;
 
 	onMount(async () => {
 		const data = await getStudentsWithRooms();
 		studentsWithRooms.set(data);
-
 		loading = false;
 	});
 
-	// async function refreshStudentsWithRooms(e) {
-	// 	studentsWithRooms = await getStudentsWithRooms();
-	// 	e.detail.done();
-
-	// }
 </script>
 
 <Header />
@@ -47,10 +40,6 @@
 <style>
 	.spacer {
 		height: 20px;
-	}
-
-	.spacer2 {
-		height: 60px;
 	}
 
 	p {

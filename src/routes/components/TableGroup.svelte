@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { SortedStudentsWithRooms, StudentRoom } from '$lib/model';
 	import {
-		Button,
-		Modal,
 		Table,
 		TableBody,
 		TableBodyCell,
@@ -11,7 +9,6 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 
-	import EditModalContent from './EditModalContent.svelte';
 	import EditModal from './EditModal.svelte';
 
 	export let studentWithRooms: SortedStudentsWithRooms;
@@ -59,7 +56,6 @@
 	<TableBody tableBodyClass="divide-y">
 		{#each studentWithRooms.studentRoom as studentWithRoom}
 			<TableBodyRow>
-				<!-- <TableBodyRow on:dblclick={() => console.log('HGI')}> -->
 				<TableBodyCell>
 					<a
 						href="/"
@@ -94,8 +90,6 @@
 </Table>
 
 <div class="spacer"></div>
-
-<!-- <PassivUsers passivStudents={passiveStudents} /> -->
 
 <style>
 	.spacer {

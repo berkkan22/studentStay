@@ -31,7 +31,7 @@ export async function getAllRooms() {
   }
 
   const res = await response.json();
-  console.log(res);
+
   const rooms: Room[] = res["rooms"].map((room: any) => {
     return {
       id: room[0],
@@ -58,7 +58,6 @@ export async function getAllStudents() {
   }
 
   const res = await response.json();
-  console.log(res);
   const students: Student[] = res["students"].map((student: any) => {
     return {
       id: student[0],
@@ -128,10 +127,6 @@ export async function getStudentsWithRooms() {
     }))
   });
 
-  console.log(passiveStudents)
-
-  console.log(sortedStudentsWithRooms);
-
   return sortedStudentsWithRooms;
 }
 
@@ -169,7 +164,6 @@ export async function updateStudentRoom(studentId: number, roomId: number) {
     throw new Error(res["message"]);
   }
 
-  console.log(res);
   return res;
 }
 
@@ -196,7 +190,6 @@ export async function setStudentPassiv(studentId: number) {
     throw new Error(res["message"]);
   }
 
-  console.log(res);
   return res;
 }
 
@@ -221,7 +214,6 @@ export async function setStudentAktive(studentId: number) {
     throw new Error(res["message"]);
   }
 
-  console.log(res);
   return res;
 }
 
@@ -247,6 +239,5 @@ export async function updateStudent(studentId: number, updateFields: Partial<Stu
     throw new Error(res["message"]);
   }
 
-  console.log(res);
   return res;
 }

@@ -32,7 +32,6 @@ export const actions = {
   setCookies: async ({ request, cookies }) => {
     // Parse the incoming JSON body from the request
     const data = await request.formData(); // Expect form data
-    console.log('Data:', data);
     const action = data.get('action');
 
     if (action === 'setCookies') {
