@@ -10,18 +10,13 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import PassivUsers from './PassivUsers.svelte';
-	import { setStudentPassiv } from '$lib/requests';
-	import { createEventDispatcher, onMount } from 'svelte';
-	import EditModal from './EditModal.svelte';
+
 	import EditModalContent from './EditModalContent.svelte';
+	import EditModal from './EditModal.svelte';
 
 	export let studentWithRooms: SortedStudentsWithRooms;
 	let selectedStudent: StudentRoom | null = null;
 	let showModal = false;
-	let showProcessIndicator = false;
-
-	const dispatch = createEventDispatcher();
 
 	function editStudent(studentWithRoom: StudentRoom) {
 		selectedStudent = studentWithRoom;
@@ -33,22 +28,9 @@
 		showModal = false;
 		selectedStudent = null;
 	}
-
-	// async function passiv() {
-	// 	showProcessIndicator = true;
-	// 	const res = await setStudentPassiv(selectedStudent.student.id);
-	// 	closeModal();
-	// 	showProcessIndicator = false;
-	// 	dispatch('refresh');
-	// }
 </script>
 
-<EditModal
-	bind:showModal
-	bind:selectedStudent
-	on:close={closeModal}
-	on:refresh={() => dispatch('refresh')}
-/>
+<EditModal bind:showModal bind:selectedStudent on:close={closeModal} />
 
 <h1 class="init">{studentWithRooms.location}</h1>
 <Table shadow striped={true} hoverable={true}>

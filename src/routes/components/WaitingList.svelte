@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { SortedStudentsWithRooms, StudentRoom } from '$lib/model';
-	import { getAllRoomLocations, updateStudentRoom } from '$lib/requests';
+	import { getAllRoomLocations, getStudentsWithRooms, updateStudentRoom } from '$lib/requests';
+	import { studentsWithRooms } from '$lib/store';
 	import {
 		Accordion,
 		AccordionItem,
@@ -14,7 +15,6 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
 
 	export let studentWithRooms: SortedStudentsWithRooms;
 
@@ -25,13 +25,12 @@
 	let errorMessage = '';
 	let showProcessIndicator = false;
 
-	const dispatch = createEventDispatcher();
-
 	async function editStudent(studentWithRoom: StudentRoom) {
-		roomLocations = await getAllRoomLocations();
-		console.log('Edit user');
 		selectedStudent = studentWithRoom;
 		editModal = true;
+		showProcessIndicator = true;
+		roomLocations = await getAllRoomLocations();
+		showProcessIndicator = false;
 	}
 
 	function closeModal() {
@@ -45,8 +44,13 @@
 
 		try {
 			const res = await updateStudentRoom(selectedStudent.student?.id, newRoom);
-			closeModal();
-			dispatch('refresh');
+			if (res['status'] === 'success') {
+				const data = await getStudentsWithRooms();
+				studentsWithRooms.set(data);
+				closeModal();
+			} else {
+				errorMessage = 'Failed to update room. ' + res['message'];
+			}
 		} catch (error) {
 			if ((error = 'No available room found for the given location')) {
 				errorMessage = 'Odalar dolu. Lütfen başka bir oda seçin.';
@@ -65,6 +69,7 @@
 			<div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
 		</div>
 	{/if}
+
 	<p class="text-base leading-relaxed text-red-500">{errorMessage}</p>
 	<p class="text-base leading-relaxed">
 		<b>{selectedStudent.student?.firstname} {selectedStudent.student?.lastname}</b> hangi odaya koyacaksin?

@@ -5,6 +5,8 @@
 
 	import * as Flag from 'svelte-flag-icons';
 	import { onMount } from 'svelte';
+	import { config } from '$lib/config';
+
 
 	let defaultModal = false;
 	let errorModal = false;
@@ -97,7 +99,7 @@
 		console.log(data);
 
 		try {
-			const response = await fetch('http://localhost:8000/submit', {
+			const response = await fetch(`${config.apiUrl}/submit`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'

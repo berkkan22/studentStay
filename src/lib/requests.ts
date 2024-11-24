@@ -1,13 +1,28 @@
+import { config } from "./config";
 import { dummyStudent, type Room, type StudentRoom } from "./model";
 import type { SortedStudentsWithRooms, Student } from "./model";
+import { allRooms } from "./store";
+import { getValidAccessToken } from "./utils";
+import { get } from 'svelte/store';
 
+function getCookies() {
+  const temp = document.cookie.split(';').reduce((acc, cookie) => {
+    const [key, value] = cookie.split('=').map(c => c.trim());
+    acc[key] = decodeURIComponent(value);
+    return acc;
+  }, {} as Record<string, string>);
 
+  return JSON.parse(temp.session);
+}
 
 export async function getAllRooms() {
-  const response = await fetch('http://localhost:8000/rooms', {
+  const { validAccessToken } = await getValidAccessToken(getCookies());
+
+  const response = await fetch(`${config.apiUrl}/rooms`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Token': `${validAccessToken}`
     }
   });
 
@@ -28,10 +43,13 @@ export async function getAllRooms() {
 }
 
 export async function getAllStudents() {
-  const response = await fetch('http://localhost:8000/students', {
+  const { validAccessToken } = await getValidAccessToken(getCookies());
+
+  const response = await fetch(`${config.apiUrl}/students`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Token': `${validAccessToken}`
     }
   });
 
@@ -118,17 +136,25 @@ export async function getStudentsWithRooms() {
 }
 
 export async function getAllRoomLocations() {
+  if (get(allRooms).length > 0) {
+    return get(allRooms);
+  }
+
   const rooms = await getAllRooms();
   const locations = Array.from(new Set(rooms.map(room => room.location)));
   locations.push('Select a room');
+  allRooms.set(locations);
   return locations;
 }
 
 export async function updateStudentRoom(studentId: number, roomId: number) {
-  const response = await fetch(`http://localhost:8000/updateStudentRoom`, {
+  const { validAccessToken } = await getValidAccessToken(getCookies());
+
+  const response = await fetch(`${config.apiUrl}/updateStudentRoom`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Token': `${validAccessToken}`
     },
     body: JSON.stringify({ roomId, studentId })
   });
@@ -148,10 +174,13 @@ export async function updateStudentRoom(studentId: number, roomId: number) {
 }
 
 export async function setStudentPassiv(studentId: number) {
-  const response = await fetch(`http://localhost:8000/setStudentPassiv`, {
+  const { validAccessToken } = await getValidAccessToken(getCookies());
+
+  const response = await fetch(`${config.apiUrl}/setStudentPassiv`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Token': `${validAccessToken}`
     },
     body: JSON.stringify({ studentId })
   });
@@ -172,10 +201,13 @@ export async function setStudentPassiv(studentId: number) {
 }
 
 export async function setStudentAktive(studentId: number) {
-  const response = await fetch(`http://localhost:8000/setStudentAktiv`, {
+  const { validAccessToken } = await getValidAccessToken(getCookies());
+
+  const response = await fetch(`${config.apiUrl}/setStudentAktiv`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Token': `${validAccessToken}`
     },
     body: JSON.stringify({ studentId })
   });
@@ -194,10 +226,13 @@ export async function setStudentAktive(studentId: number) {
 }
 
 export async function updateStudent(studentId: number, updateFields: Partial<Student>) {
-  const response = await fetch(`http://localhost:8000/updateStudent`, {
+  const { validAccessToken } = await getValidAccessToken(getCookies());
+
+  const response = await fetch(`${config.apiUrl}/updateStudent`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Token': `${validAccessToken}`
     },
     body: JSON.stringify({ studentId, updateFields })
   });

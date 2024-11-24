@@ -2,28 +2,26 @@
 <script lang="ts">
 	import type { StudentRoom } from '$lib/model';
 	import {
+		getStudentsWithRooms,
 		setStudentAktive,
 		setStudentPassiv,
 		updateStudent,
-		updateStudentRoom
 	} from '$lib/requests';
 	import { Button, Modal } from 'flowbite-svelte';
-	import { createEventDispatcher } from 'svelte';
 	import EditModalContent from './EditModalContent.svelte';
+	import { studentsWithRooms } from '$lib/store';
 
 	export let selectedStudent: StudentRoom | null = null;
 	export let showModal: boolean = false;
 	let showProcessIndicator = false;
 	let errorMessage = '';
 
-	const dispatch = createEventDispatcher();
 	let editModalContent;
 
-	function closeModal() {
+	export function closeModal() {
 		showModal = false;
 		selectedStudent = null;
 		errorMessage = '';
-		dispatch('close');
 	}
 
 	async function passiv() {
@@ -31,8 +29,13 @@
 		errorMessage = '';
 		try {
 			const res = await setStudentPassiv(selectedStudent.student.id);
-			closeModal();
-			dispatch('refresh');
+			if (res['status'] === 'success') {
+				const data = await getStudentsWithRooms();
+				studentsWithRooms.set(data);
+				closeModal();
+			} else {
+				errorMessage = 'Failed to update room. ' + res['message'];
+			}
 		} catch (error) {
 			errorMessage = 'Failed to set student as passive. ' + error;
 		} finally {
@@ -45,8 +48,13 @@
 		errorMessage = '';
 		try {
 			const res = await setStudentAktive(selectedStudent.student.id);
-			closeModal();
-			dispatch('refresh');
+			if (res['status'] === 'success') {
+				const data = await getStudentsWithRooms();
+				studentsWithRooms.set(data);
+				closeModal();
+			} else {
+				errorMessage = 'Failed to update room. ' + res['message'];
+			}
 		} catch (error) {
 			errorMessage = 'Failed to set student as active. ' + error;
 		} finally {
@@ -60,8 +68,13 @@
 		try {
 			const updatedFields = editModalContent.getUpdatedFields();
 			const res = await updateStudent(selectedStudent.student?.id, updatedFields);
-			closeModal();
-			dispatch('refresh');
+			if (res['status'] === 'success') {
+				const data = await getStudentsWithRooms();
+				studentsWithRooms.set(data);
+				closeModal();
+			} else {
+				errorMessage = 'Failed to update room. ' + res['message'];
+			}
 		} catch (error) {
 			errorMessage = 'Failed to save student. ' + error;
 		} finally {
