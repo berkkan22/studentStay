@@ -54,7 +54,7 @@
 			}
 		} catch (error) {
 			if ((error = 'No available room found for the given location')) {
-				errorMessage = 'Odalar dolu. Lütfen başka bir oda seçin.';
+				errorMessage = $t('roomFull');
 			} else {
 				errorMessage = 'Failed to update room. ' + error;
 			}

@@ -242,18 +242,16 @@ export async function updateStudent(studentId: number, updateFields: Partial<Stu
   return res;
 }
 
-export function isDateNear(date: string, days: number = 7): boolean {
-  const targetDate = new Date(date);
-  const currentDate = new Date();
-  const diffTime = Math.abs(targetDate.getTime() - currentDate.getTime());
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays <= days;
-}
-
-export function isDateExceeded(date: string, days: number = 7): boolean {
+export function isDateNear(date: string): boolean {
   const targetDate = new Date(date);
   const currentDate = new Date();
   const diffTime = targetDate.getTime() - currentDate.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays < -days;
+  return diffDays <= 7 && diffDays >= 0;
+}
+
+export function isDateExceeded(date: string): boolean {
+  const targetDate = new Date(date);
+  const currentDate = new Date();
+  return targetDate < currentDate;
 }

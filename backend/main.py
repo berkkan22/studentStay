@@ -1,7 +1,6 @@
-from http.client import HTTPException
 import os
 from config import load_config
-from fastapi import FastAPI, Request, status, Depends
+from fastapi import FastAPI, Request, status, Depends, HTTPException
 from pydantic import BaseModel
 import datetime
 from fastapi.middleware.cors import CORSMiddleware
@@ -309,7 +308,7 @@ async def set_student_aktiv(data: Request, api_key: str = Depends(get_api_key_ht
 
         cur.execute("""
             UPDATE student
-            SET passiv = FALSE
+            SET passiv = FALSE, submit_date = NOW()
             WHERE id = %s
         """, (student_id,))
 
