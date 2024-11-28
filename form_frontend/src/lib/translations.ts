@@ -43,6 +43,7 @@ export default {
     "semester_error": "Bitte geben Sie Ihr Semester ein",
     "company_error": "Bitte geben Sie den Namen Ihres Unternehmens ein",
     "others_error": "Bitte geben Sie den Grund ein",
+    "fill_all": "Bitte füllen Sie alle Felder aus",
   },
   Tr: {
     "language": "Türkçe",
@@ -86,5 +87,6 @@ export default {
     "semester_error": "Lütfen sınıfınızı giriniz",
     "company_error": "Lütfen şirketinizin adını giriniz",
     "others_error": "Lütfen sebebinizi giriniz",
+    "fill_all": "Lütfen tüm alanları doldurunuz",
   },
 };

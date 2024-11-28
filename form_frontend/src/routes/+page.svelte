@@ -6,6 +6,8 @@
 	import * as Flag from 'svelte-flag-icons';
 	import { onMount } from 'svelte';
 	import { config } from '$lib/config';
+	import ditib from '$lib/images/ditib_logo_rgb.png';
+	import toast, { Toaster } from 'svelte-french-toast';
 
 	let defaultModal = false;
 	let errorModal = false;
@@ -140,6 +142,9 @@
 			window.scrollTo(0, 0);
 
 			// TODO: add toast from gedicht
+			toast.error($t('fill_all'), {
+				position: 'bottom-center'
+			});
 			return;
 		}
 
@@ -207,7 +212,8 @@
 </script>
 
 <header>
-	<h1 class="init">{$t('title')}</h1>
+	<img src={ditib} alt="Ditib Logo" class="logo" />
+	<h1 class="init ml-2">{$t('title')}</h1>
 	<div class="language-switcher">
 		<div
 			class="language-button"
@@ -472,6 +478,8 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	</svelte:fragment>
 </Modal>
 
+<Toaster />
+
 <!-- TODO add toast from gedicht  -->
 
 <style>
@@ -479,11 +487,18 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 		display: flex;
 		justify-content: center;
 		align-items: baseline;
+		margin-top: 2rem;
+	}
+
+	.logo {
+		width: 50px;
+		margin-right: 12px;
+		position: relative;
+		top: 3.5px;
 	}
 
 	h1 {
 		text-align: center;
-		margin-top: 2rem;
 	}
 
 	form {
