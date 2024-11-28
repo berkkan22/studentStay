@@ -14,6 +14,27 @@
 	let vorwahl: string = fallbackLocale;
 	let errorMessage = '';
 
+	let selectedOption = '';
+	let firstNameError = false;
+	let lastNameError = false;
+	let birthdayError = false;
+	let emailError = false;
+	let phoneError = false;
+	let addressError = false;
+	let reasonError = false;
+
+	let universityError = false;
+	let courseError = false;
+	let semesterError = false;
+
+	let companyNameError = false;
+
+	let othersError = false;
+
+	$: showUniversityFields = selectedOption === 'studium';
+	$: showFirmField = selectedOption === 'praktikum';
+	$: showSonstigesField = selectedOption === 'sonstiges';
+
 	onMount(() => {
 		$locale = getLocaleFromNavigator();
 		vorwahl = $locale;
@@ -59,40 +80,84 @@
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
 
+		// Pflicht
 		const firstName = (document.getElementById('first_name') as HTMLInputElement).value;
 		const lastName = (document.getElementById('last_name') as HTMLInputElement).value;
 		const birthday = (document.getElementById('birthday') as HTMLInputElement).value;
-		const bafog = parseFloat((document.getElementById('bafog') as HTMLInputElement).value);
-		const rent = parseFloat((document.getElementById('rent') as HTMLInputElement).value);
-		const homeEntrance = (document.getElementById('home_entrance') as HTMLInputElement).value;
-		const homeExit = (document.getElementById('home_exit') as HTMLInputElement).value;
-		const contract = (document.getElementById('contract') as HTMLInputElement).value;
-		const university = (document.getElementById('university') as HTMLInputElement).value;
-		const course = (document.getElementById('course') as HTMLInputElement).value;
-		const semester = (document.getElementById('semester') as HTMLInputElement).value;
-		const universityTr = (document.getElementById('university_tr') as HTMLInputElement).value;
+		const email = (document.getElementById('email') as HTMLInputElement).value;
 		const phone =
 			translations[vorwahl]['vorwahl'] +
 			(document.getElementById('phone-input') as HTMLInputElement).value;
-		const email = (document.getElementById('email') as HTMLInputElement).value;
 		const address = (document.getElementById('address') as HTMLInputElement).value;
+		const reason = selectedOption;
+
+		firstNameError = !firstName;
+		lastNameError = !lastName;
+		birthdayError = !birthday;
+		emailError = !email;
+		phoneError = phone.length < 4;
+		addressError = !address;
+		reasonError = !reason;
+
+		// Studium Pflicht
+		const university = (document.getElementById('university') as HTMLInputElement)?.value || null;
+		const course = (document.getElementById('course') as HTMLInputElement)?.value || null;
+		const semester = (document.getElementById('semester') as HTMLInputElement)?.value || null;
+		// optional
+		const universityTr =
+			(document.getElementById('university_tr') as HTMLInputElement)?.value || null;
+		const bafog = parseFloat((document.getElementById('bafog') as HTMLInputElement)?.value) || null;
+
+		// Praktikum pflicht
+		const firm = (document.getElementById('firm') as HTMLInputElement)?.value || null;
+
+		// Sonstiges pflicht
+		const sonstiges =
+			(document.getElementById('sonstigesInput') as HTMLInputElement)?.value || null;
+
+		if (reason === 'studium') {
+			universityError = !university;
+			courseError = !course;
+			semesterError = !semester;
+		} else if (reason === 'praktikum') {
+			companyNameError = !firm;
+		} else if (reason === 'sonstiges') {
+			othersError = !sonstiges;
+		}
+
+		if (
+			!firstName ||
+			!lastName ||
+			!birthday ||
+			!email ||
+			phoneError ||
+			!address ||
+			!reason ||
+			(reason === 'studium' && (!university || !course || !semester)) ||
+			(reason === 'praktikum' && !firm) ||
+			(reason === 'sonstiges' && !sonstiges)
+		) {
+			window.scrollTo(0, 0);
+
+			// TODO: add toast from gedicht
+			return;
+		}
 
 		let data = {
-			firstname: firstName,
-			lastname: lastName,
-			birthday: birthday,
-			bafog: bafog,
-			rent: rent,
-			home_entrance: homeEntrance,
-			home_exit: homeExit,
-			contract: contract,
-			university: university,
-			course: course,
-			semester: semester,
-			university_tr: universityTr,
-			telephone: phone,
-			email: email,
-			address: address
+			firstname: firstName, // required
+			lastname: lastName, // required
+			birthday: birthday, // required
+			email: email, // required
+			telephone: phone, // required
+			address: address, // required
+			reason: reason, // required
+			university: university, // if reason is studium required
+			course: course, // if reason is studium required
+			semester: semester, // if reason is studium required
+			university_tr: universityTr, // if reason is studium optinal
+			bafog: bafog, // if reason is studium optinal
+			company: firm, // if reason is praktikum required
+			others: sonstiges // if reason is sonstiges required
 		};
 
 		console.log(data);
@@ -131,6 +196,7 @@
 			// popup fail try again
 			console.error('Error submitting form:', error);
 		}
+		return;
 	}
 
 	function cleanInput() {
@@ -141,7 +207,7 @@
 </script>
 
 <header>
-	<h1 class="init">Student Stay</h1>
+	<h1 class="init">{$t('title')}</h1>
 	<div class="language-switcher">
 		<div
 			class="language-button"
@@ -191,50 +257,30 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	<div class="mb-6">
 		<Label for="first_name" class="mb-2">{$t('first_name')}</Label>
 		<Input type="text" id="first_name" placeholder="John" />
+		{#if firstNameError}
+			<p class="ml-2 text-red-500">{$t('first_name_error')}</p>
+		{/if}
 	</div>
 	<div class="mb-6">
 		<Label for="last_name" class="mb-2">{$t('last_name')}</Label>
 		<Input type="text" id="last_name" placeholder="Doe" />
+		{#if lastNameError}
+			<p class="ml-2 text-red-500">{$t('last_name_error')}</p>
+		{/if}
 	</div>
 	<div class="mb-6">
 		<Label for="birthday" class="mb-2">{$t('birthday')}</Label>
 		<Input type="date" id="birthday" placeholder="Flowbite" />
+		{#if birthdayError}
+			<p class="ml-2 text-red-500">{$t('birthday_error')}</p>
+		{/if}
 	</div>
 	<div class="mb-6">
-		<Label for="bafog" class="mb-2">{$t('bafog')}</Label>
-		<Input type="number" id="bafog" placeholder="Doe" />
-	</div>
-	<div class="mb-6">
-		<Label for="rent" class="mb-2">{$t('rent')}</Label>
-		<Input type="number" id="rent" placeholder="Doe" />
-	</div>
-	<div class="mb-6">
-		<Label for="home_entrance" class="mb-2">{$t('home_entrance')}</Label>
-		<Input type="date" id="home_entrance" placeholder="Doe" />
-	</div>
-	<div class="mb-6">
-		<Label for="home_exit" class="mb-2">{$t('home_exit')}</Label>
-		<Input type="date" id="home_exit" placeholder="Doe" />
-	</div>
-	<div class="mb-6">
-		<Label for="contract" class="mb-2">{$t('contract')}</Label>
-		<Input type="date" id="contract" placeholder="Doe" />
-	</div>
-	<div class="mb-6">
-		<Label for="university" class="mb-2">{$t('university')}</Label>
-		<Input type="text" id="university" placeholder="Doe" />
-	</div>
-	<div class="mb-6">
-		<Label for="course" class="mb-2">{$t('course')}</Label>
-		<Input type="text" id="course" placeholder="Doe" />
-	</div>
-	<div class="mb-6">
-		<Label for="semester" class="mb-2">{$t('semester')}</Label>
-		<Input type="text" id="semester" placeholder="Doe" />
-	</div>
-	<div class="mb-6">
-		<Label for="university_tr" class="mb-2">{$t('university_tr')}</Label>
-		<Input type="text" id="university_tr" placeholder="Doe" />
+		<Label for="email" class="mb-2">{$t('email')}</Label>
+		<Input type="email" id="email" placeholder="john.doe@company.com" />
+		{#if emailError}
+			<p class="ml-2 text-red-500">{$t('email_error')}</p>
+		{/if}
 	</div>
 	<div class="mb-6">
 		<Label for="phone" class="mb-2">{$t('telephone')}</Label>
@@ -289,15 +335,107 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 				</div>
 			{/each}
 		</div>
-	</div>
-	<div class="mb-6">
-		<Label for="email" class="mb-2">Email address</Label>
-		<Input type="email" id="email" placeholder="john.doe@company.com" />
+		{#if phoneError}
+			<p class="ml-2 text-red-500">Phone {$t('telephone_error')}</p>
+		{/if}
 	</div>
 	<div class="mb-6">
 		<Label for="address" class="mb-2">{$t('address')}</Label>
 		<Input type="text" id="address" placeholder="john.doe@company.com" />
+		{#if addressError}
+			<p class="ml-2 text-red-500">{$t('address_error')}</p>
+		{/if}
 	</div>
+	<div class="mb-6">
+		<Label for="option" class="mb-2">Grund für den Aufenthalt in Hamburg*</Label>
+		<div>
+			<input
+				class="mb-2"
+				type="radio"
+				id="studium"
+				name="option"
+				value="studium"
+				bind:group={selectedOption}
+			/>
+			<label for="studium">{$t('studium')}</label>
+		</div>
+		<div>
+			<input
+				class="mb-2"
+				type="radio"
+				id="praktikum"
+				name="option"
+				value="praktikum"
+				bind:group={selectedOption}
+			/>
+			<label for="praktikum">{$t('practice')}</label>
+		</div>
+		<div>
+			<input
+				type="radio"
+				id="sonstiges"
+				name="option"
+				value="sonstiges"
+				bind:group={selectedOption}
+			/>
+			<label for="sonstiges">{$t('others')}</label>
+		</div>
+		{#if reasonError}
+			<p class="ml-2 mt-2 text-red-500">{$t('reason_error')}</p>
+		{/if}
+	</div>
+
+	{#if showUniversityFields}
+		<div class="mb-6">
+			<Label for="university" class="mb-2">{$t('university')}</Label>
+			<Input type="text" id="university" placeholder="Doe" />
+			{#if universityError}
+				<p class="ml-2 text-red-500">{$t('university_error')}</p>
+			{/if}
+		</div>
+		<div class="mb-6">
+			<Label for="course" class="mb-2">{$t('course')}</Label>
+			<Input type="text" id="course" placeholder="Doe" />
+			{#if courseError}
+				<p class="ml-2 text-red-500">{$t('course_error')}</p>
+			{/if}
+		</div>
+		<div class="mb-6">
+			<Label for="semester" class="mb-2">{$t('semester')}</Label>
+			<Input type="text" id="semester" placeholder="Doe" />
+			{#if semesterError}
+				<p class="ml-2 text-red-500">{$t('semester_error')}</p>
+			{/if}
+		</div>
+		<div class="mb-6">
+			<Label for="university_tr" class="mb-2">{$t('university_tr')}</Label>
+			<Input type="text" id="university_tr" placeholder="Doe" />
+		</div>
+		<div class="mb-6">
+			<Label for="bafog" class="mb-2">{$t('bafog')}</Label>
+			<Input type="number" id="bafog" placeholder="Doe" />
+		</div>
+	{/if}
+
+	{#if showFirmField}
+		<div class="mb-6">
+			<Label for="firm" class="mb-2">{$t('company')}</Label>
+			<Input type="text" id="firm" placeholder="Doe" />
+			{#if companyNameError}
+				<p class="ml-2 text-red-500">{$t('company_error')}</p>
+			{/if}
+		</div>
+	{/if}
+
+	{#if showSonstigesField}
+		<div class="mb-6">
+			<Label for="sonstigesLabel" class="mb-2">{$t('others')}*</Label>
+			<Input type="text" id="sonstigesInput" placeholder="Doe" />
+			{#if othersError}
+				<p class="ml-2 text-red-500">{$t('others_error')}</p>
+			{/if}
+		</div>
+	{/if}
 	<!-- <Checkbox class="mb-6 space-x-1 rtl:space-x-reverse">
 		I agree with the <A href="/" class="text-primary-700 hover:underline dark:text-primary-600"
 			>terms and conditions</A
@@ -333,6 +471,8 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 		<Button>{$t('popup_close_error')}</Button>
 	</svelte:fragment>
 </Modal>
+
+<!-- TODO add toast from gedicht  -->
 
 <style>
 	header {

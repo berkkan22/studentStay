@@ -149,10 +149,13 @@ class User(BaseModel):
     address: str
 
 
-def clearSemester(sem: str):
+def clearSemester(sem):
+    if sem is None:
+        return None
     match = re.search(r'\d+', sem)
     if match:
         return int(match.group())
+    print("No match found")
     return None
 
 
@@ -161,24 +164,19 @@ async def register_user(user: Request):
     try:
         user = await user.json()
         user = user["user"]
-        required_fields = ["firstname", "lastname", "birthday", "bafog", "rent", "home_entrance", "home_exit",
-                           "contract", "university", "course", "semester", "university_tr", "telephone", "email", "address"]
-
-        for field in required_fields:
-            if field not in user or user[field] is None:
-                return {"status": "fail", "message": f"Field '{field}' is missing or empty"}
 
         conn = psycopg2.connect(**config)
         cur = conn.cursor()
 
+
+# CREATE TABLE student (    id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,    firstname varchar(255) NOT NULL,    lastname varchar(255) NOT NULL,    birthdate date NOT NULL,    email varchar(255) NOT NULL UNIQUE,    telephone varchar(255) NOT NULL UNIQUE,    address varchar(255) NOT NULL,    reason varchar NOT NULL,    university varchar(255),    course varchar(255),    semester int,    university_tr varchar(255),    bafog real,    company varchar(255),    others varchar(255),home_entrance date default NULL,    home_exit date default NULL,    contract date default NULL,    rent real default NULL,    sumbit_date date,    room_id int,   CONSTRAINT fk_room FOREIGN KEY (room_id) REFERENCES room (id))
+
         cur.execute("""
-            INSERT INTO student (firstname, lastname, birthday, bafog, rent, home_entrance, home_exit, contract, university, course, semester, university_tr, telephone, email, address, submit_date)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO student (firstname, lastname, birthday, email, telephone, address, reason, university, course, semester, university_tr, bafog, company, others, submit_date)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """, (
-            user["firstname"], user["lastname"], user["birthday"], user["bafog"], user["rent"], user["home_entrance"],
-            user["home_exit"], user["contract"], user["university"], user["course"], clearSemester(
-                user["semester"]),
-            user["university_tr"], user["telephone"], user["email"], user["address"], datetime.datetime.now()
+            user["firstname"], user["lastname"], user["birthday"], user["email"], user["telephone"], user["address"], user["reason"], user["university"], user["course"], clearSemester(
+                user["semester"]), user.get("university_tr"), user.get("bafog"), user.get("company"), user.get("others"), datetime.datetime.now()
         ))
 
         conn.commit()
@@ -186,7 +184,6 @@ async def register_user(user: Request):
         cur.close()
         conn.close()
 
-        # TODO: add postgresql
         return {"status": "success", "message": "User registered successfully"}
     except Exception as e:
         return {"status": "fail", "message": str(e)}
