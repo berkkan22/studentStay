@@ -132,7 +132,6 @@ export async function getStudentsWithRooms() {
     }))
   });
 
-  console.log(sortedStudentsWithRooms);
   return sortedStudentsWithRooms;
 }
 

@@ -9,7 +9,7 @@ interface DecodedToken {
 export async function getRefreshToken(refreshToken: string): Promise<{ access_token: string; refresh_token?: string, expires_in: number }> {
   try {
     console.log('Refreshing token...');
-    console.log('Refresh token:', refreshToken);
+    // console.log('Refresh token:', refreshToken);
     const response = await fetch(`${config.apiUrl}/refresh-token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -66,11 +66,10 @@ export async function updateTokens(cookies: any, newToken: { access_token: strin
 
 export async function getValidAccessToken(cookies: any): Promise<{ validAccessToken: string }> {
   try {
-
     if (isTokenExpired(cookies.access_token)) {
       const newTokens = await getRefreshToken(cookies.refresh_token);
-      const newCookies = updateTokens(cookies, newTokens);
-      console.log('New cookies:', newCookies);
+      await updateTokens(cookies, newTokens);
+      // console.log('New cookies:', newCookies);
 
       return { validAccessToken: newTokens.access_token };
     }

@@ -329,7 +329,8 @@ async def update_student(data: Request, api_key: str = Depends(get_api_key_http)
         if not update_fields:
             return {"status": "fail", "message": "No fields to update"}
 
-        update_fields = {key: (None if value == '-' or value == '' else value) for key, value in update_fields.items()}
+        update_fields = {key: (None if value == '-' or value == '' else value)
+                         for key, value in update_fields.items()}
         set_clause = ", ".join([f"{key} = %s" for key in update_fields.keys()])
         values = list(update_fields.values())
         values.append(student_id)

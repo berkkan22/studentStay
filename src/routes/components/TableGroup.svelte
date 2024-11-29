@@ -22,7 +22,6 @@
 
 		selectedStudent = studentWithRoom;
 		showModal = true;
-		console.log('Edit user');
 	}
 
 	export function closeModal() {
