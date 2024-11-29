@@ -9,19 +9,22 @@
 			firstname: (document.getElementById('firstname') as HTMLInputElement).value,
 			lastname: (document.getElementById('lastname') as HTMLInputElement).value,
 			birthday: (document.getElementById('birthday') as HTMLInputElement).value,
+			email: (document.getElementById('email') as HTMLInputElement).value,
+			telephone: (document.getElementById('telephone') as HTMLInputElement).value,
+			address: (document.getElementById('address') as HTMLInputElement).value,
+			reason: (document.getElementById('reason') as HTMLInputElement).value,
+			university: (document.getElementById('university') as HTMLInputElement).value,
+			course: (document.getElementById('course') as HTMLInputElement).value,
+			semester: (document.getElementById('semester') as HTMLInputElement).value.replace(/\D/g, ''),
+			university_tr: (document.getElementById('universityTr') as HTMLInputElement).value,
 			bafog: (document.getElementById('bafog') as HTMLInputElement).value,
-			rent: (document.getElementById('rent') as HTMLInputElement).value,
+			company: (document.getElementById('company') as HTMLInputElement).value,
+			others: (document.getElementById('others') as HTMLInputElement).value,
 			home_entrance: (document.getElementById('homeEntrance') as HTMLInputElement).value,
 			home_exit: (document.getElementById('homeExit') as HTMLInputElement).value,
 			contract: (document.getElementById('contract') as HTMLInputElement).value,
-			// KotenjanHoca: (document.getElementById('KotenjanHoca') as HTMLInputElement).value,
-			university: (document.getElementById('university') as HTMLInputElement).value,
-			course: (document.getElementById('course') as HTMLInputElement).value,
-			semester: (document.getElementById('semester') as HTMLInputElement).value.match(/\d+/)[0],
-			university_tr: (document.getElementById('universityTr') as HTMLInputElement).value,
-			telephone: (document.getElementById('telephone') as HTMLInputElement).value,
-			email: (document.getElementById('email') as HTMLInputElement).value,
-			address: (document.getElementById('address') as HTMLInputElement).value
+			rent: (document.getElementById('rent') as HTMLInputElement).value,
+			note: (document.getElementById('notes') as HTMLInputElement).value
 		};
 		return updatedFields;
 	}
@@ -63,72 +66,47 @@
 			/>
 		</div>
 		<div>
-			<label for="bafog" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>{$t('bafog')}</label
+			<label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('email')}</label
 			>
 			<input
-				type="number"
-				id="bafog"
+				type="email"
+				id="email"
 				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.bafog}
+				bind:value={selectedStudent.student.email}
 			/>
 		</div>
 		<div>
-			<label for="rent" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>{$t('rent')}</label
-			>
-			<input
-				type="number"
-				id="rent"
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.rent}
-			/>
-		</div>
-		<div>
-			<label
-				for="homeEntrance"
-				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>{$t('home_entrance')}</label
-			>
-			<input
-				type="date"
-				id="homeEntrance"
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.homeEntrance}
-			/>
-		</div>
-		<div>
-			<label for="homeExit" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>{$t('home_exit')}</label
-			>
-			<input
-				type="date"
-				id="homeExit"
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.homeExit}
-			/>
-		</div>
-		<div>
-			<label for="contract" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>{$t('contract')}</label
-			>
-			<input
-				type="date"
-				id="contract"
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.contract}
-			/>
-		</div>
-		<div>
-			<label
-				for="KotenjanHoca"
-				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300">Kotenjan</label
+			<label for="telephone" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('telephone')}</label
 			>
 			<input
 				type="text"
-				id="KotenjanHoca"
+				id="telephone"
 				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.KotenjanHoca}
+				bind:value={selectedStudent.student.telephone}
+			/>
+		</div>
+		<div>
+			<label for="address" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('address')}</label
+			>
+			<input
+				type="text"
+				id="address"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.address}
+			/>
+		</div>
+		<div>
+			<label for="reason" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('reason')}</label
+			>
+			<input
+				type="text"
+				id="reason"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.reason}
 			/>
 		</div>
 		<div>
@@ -180,36 +158,93 @@
 			/>
 		</div>
 		<div>
-			<label for="telephone" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>{$t('telephone')}</label
+			<label for="bafog" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('bafog')}</label
 			>
 			<input
-				type="text"
-				id="telephone"
+				type="number"
+				id="bafog"
 				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.telephone}
+				bind:value={selectedStudent.student.bafog}
 			/>
 		</div>
 		<div>
-			<label for="email" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>{$t('email')}</label
-			>
-			<input
-				type="email"
-				id="email"
-				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.email}
-			/>
-		</div>
-		<div>
-			<label for="address" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
-				>{$t('address')}</label
+			<label for="company" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('company')}</label
 			>
 			<input
 				type="text"
-				id="address"
+				id="company"
 				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-				bind:value={selectedStudent.student.address}
+				bind:value={selectedStudent.student.company}
+			/>
+		</div>
+		<div>
+			<label for="others" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('others')}</label
+			>
+			<input
+				type="text"
+				id="others"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.others}
+			/>
+		</div>
+		<div>
+			<label
+				for="homeEntrance"
+				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('home_entrance')}</label
+			>
+			<input
+				type="date"
+				id="homeEntrance"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.homeEntrance}
+			/>
+		</div>
+		<div>
+			<label for="homeExit" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('home_exit')}</label
+			>
+			<input
+				type="date"
+				id="homeExit"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.homeExit}
+			/>
+		</div>
+		<div>
+			<label for="contract" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('contract')}</label
+			>
+			<input
+				type="date"
+				id="contract"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.contract}
+			/>
+		</div>
+		<div>
+			<label for="rent" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('rent')}</label
+			>
+			<input
+				type="number"
+				id="rent"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.rent}
+			/>
+		</div>
+		<div>
+			<label for="notes" class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('note')}</label
+			>
+			<input
+				type="text"
+				id="notes"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.notes}
 			/>
 		</div>
 	</div>

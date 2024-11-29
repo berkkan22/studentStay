@@ -95,10 +95,17 @@
 		<Button color="yellow" on:click={passiv}>{$t('setPassive')}</Button>
 	{/if}
 
-	<p class="text-base leading-relaxed text-red-500">{errorMessage}</p>
 	<EditModalContent bind:this={editModalContent} {selectedStudent} />
 	<svelte:fragment slot="footer">
-		<Button on:click={saveStudent}>{$t('save')}</Button>
-		<Button color="alternative" on:click={closeModal}>{$t('cancel')}</Button>
+		<div class="footer">
+			<p class="mb-2 text-base leading-relaxed text-red-500">{errorMessage}</p>
+			<div class="buttons">
+				<Button on:click={saveStudent}>{$t('save')}</Button>
+				<Button color="alternative" on:click={closeModal}>{$t('cancel')}</Button>
+			</div>
+		</div>
 	</svelte:fragment>
 </Modal>
+
+<style>
+</style>

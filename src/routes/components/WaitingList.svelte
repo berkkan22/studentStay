@@ -27,6 +27,8 @@
 	let showProcessIndicator = false;
 
 	async function editStudent(studentWithRoom: StudentRoom) {
+		event.preventDefault();
+
 		selectedStudent = studentWithRoom;
 		editModal = true;
 		showProcessIndicator = true;
@@ -109,19 +111,22 @@
 				<TableHeadCell>{$t('first_name')}</TableHeadCell>
 				<TableHeadCell>{$t('last_name')}</TableHeadCell>
 				<TableHeadCell>{$t('birthday')}</TableHeadCell>
-				<TableHeadCell>{$t('bafog')}</TableHeadCell>
-				<TableHeadCell>{$t('rent')}</TableHeadCell>
-				<TableHeadCell>{$t('home_entrance')}</TableHeadCell>
-				<TableHeadCell>{$t('home_exit')}</TableHeadCell>
-				<TableHeadCell>{$t('contract')}</TableHeadCell>
-				<TableHeadCell>Kotenjan</TableHeadCell>
+				<TableHeadCell>{$t('email')}</TableHeadCell>
+				<TableHeadCell>{$t('telephone')}</TableHeadCell>
+				<TableHeadCell>{$t('address')}</TableHeadCell>
+				<TableHeadCell>{$t('reason')}</TableHeadCell>
 				<TableHeadCell>{$t('university')}</TableHeadCell>
 				<TableHeadCell>{$t('course')}</TableHeadCell>
 				<TableHeadCell>{$t('semester')}</TableHeadCell>
 				<TableHeadCell>{$t('university_tr')}</TableHeadCell>
-				<TableHeadCell>{$t('telephone')}</TableHeadCell>
-				<TableHeadCell>{$t('email')}</TableHeadCell>
-				<TableHeadCell>{$t('address')}</TableHeadCell>
+				<TableHeadCell>{$t('bafog')}</TableHeadCell>
+				<TableHeadCell>{$t('company')}</TableHeadCell>
+				<TableHeadCell>{$t('others')}</TableHeadCell>
+				<TableHeadCell>{$t('home_entrance')}</TableHeadCell>
+				<TableHeadCell>{$t('home_exit')}</TableHeadCell>
+				<TableHeadCell>{$t('contract')}</TableHeadCell>
+				<TableHeadCell>{$t('rent')}</TableHeadCell>
+				<TableHeadCell>{$t('note')}</TableHeadCell>
 			</TableHead>
 			<TableBody tableBodyClass="divide-y">
 				<!-- <TableBodyRow slot="row" let:item> -->
@@ -137,19 +142,32 @@
 						<TableBodyCell>{studentWithRoom.student?.firstname}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.lastname}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.birthday}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.bafog}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.rent}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.homeEntrance}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.homeExit}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.contract}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.KotenjanHoca}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.email}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.telephone}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.address}</TableBodyCell>
+						<TableBodyCell
+							>{#if studentWithRoom.student?.reason === 'studium'}
+								{$t('studium')}
+							{/if}
+							{#if studentWithRoom.student?.reason === 'sonstiges'}
+								{$t('others')}
+							{/if}
+							{#if studentWithRoom.student?.reason === 'praktikum'}
+								{$t('praktikum')}
+							{/if}</TableBodyCell
+						>
 						<TableBodyCell>{studentWithRoom.student?.university}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.course}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.semester}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.universityTr}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.telephone}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.email}</TableBodyCell>
-						<TableBodyCell>{studentWithRoom.student?.address}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.bafog}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.company}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.others}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.homeEntrance}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.homeExit}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.contract}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.rent}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.notes}</TableBodyCell>
 					</TableBodyRow>
 				{/each}
 			</TableBody>

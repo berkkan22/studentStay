@@ -208,6 +208,8 @@
 		const inputs = document.querySelectorAll('input');
 		inputs.forEach((input) => (input.value = ''));
 		errorMessage = '';
+		selectedOption = '';
+		window.scrollTo(0, 0);
 	}
 </script>
 

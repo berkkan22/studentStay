@@ -3,20 +3,23 @@ export type Student = {
   firstname: string;
   lastname: string;
   birthday: string;
+  email: string;
+  telephone: string;
+  address: string;
+  reason: string;
+  university: string | null;
+  course: string | null;
+  semester: string | null;
+  universityTr: string | null;
   bafog: number | null;
-  rent: number;
+  company: string | null;
+  others: string | null;
   homeEntrance: Date | string;
   homeExit: Date | string;
   contract: Date | string;
-  KotenjanHoca: string;
-  university: string;
-  course: string;
-  semester: string;
-  universityTr: string | null;
-  telephone: string;
-  email: string;
-  address: string;
+  rent: number | null;
   submit_date: string;
+  notes: string | null;
   room_id: number | null;
   isPassive: boolean;
 };
@@ -42,20 +45,23 @@ export const dummyStudent: Student = {
   firstname: "-",
   lastname: "-",
   birthday: "-",
-  bafog: 0,
-  rent: 0,
-  homeEntrance: "-",
-  homeExit: "-",
-  contract: "-",
-  KotenjanHoca: "-",
+  email: "-",
+  telephone: "-",
+  address: "-",
+  reason: "-",
   university: "-",
   course: "-",
   semester: "-",
   universityTr: "-",
-  telephone: "-",
-  email: "-",
-  address: "-",
+  bafog: 0,
+  company: "-",
+  others: "-",
+  homeEntrance: "-",
+  homeExit: "-",
+  contract: "-",
+  rent: 0,
   submit_date: "-",
+  notes: "-",
   room_id: null,
   isPassive: false
 };

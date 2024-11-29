@@ -18,6 +18,8 @@
 	let showModal = false;
 
 	function editStudent(studentWithRoom: StudentRoom) {
+		event.preventDefault();
+
 		selectedStudent = studentWithRoom;
 		showModal = true;
 		console.log('Edit user');
@@ -41,19 +43,22 @@
 		<TableHeadCell>{$t('first_name')}</TableHeadCell>
 		<TableHeadCell>{$t('last_name')}</TableHeadCell>
 		<TableHeadCell>{$t('birthday')}</TableHeadCell>
-		<TableHeadCell>{$t('bafog')}</TableHeadCell>
-		<TableHeadCell>{$t('rent')}</TableHeadCell>
-		<TableHeadCell>{$t('home_entrance')}</TableHeadCell>
-		<TableHeadCell>{$t('home_exit')}</TableHeadCell>
-		<TableHeadCell>{$t('contract')}</TableHeadCell>
-		<TableHeadCell>Kotenjan</TableHeadCell>
+		<TableHeadCell>{$t('email')}</TableHeadCell>
+		<TableHeadCell>{$t('telephone')}</TableHeadCell>
+		<TableHeadCell>{$t('address')}</TableHeadCell>
+		<TableHeadCell>{$t('reason')}</TableHeadCell>
 		<TableHeadCell>{$t('university')}</TableHeadCell>
 		<TableHeadCell>{$t('course')}</TableHeadCell>
 		<TableHeadCell>{$t('semester')}</TableHeadCell>
 		<TableHeadCell>{$t('university_tr')}</TableHeadCell>
-		<TableHeadCell>{$t('telephone')}</TableHeadCell>
-		<TableHeadCell>{$t('email')}</TableHeadCell>
-		<TableHeadCell>{$t('address')}</TableHeadCell>
+		<TableHeadCell>{$t('bafog')}</TableHeadCell>
+		<TableHeadCell>{$t('company')}</TableHeadCell>
+		<TableHeadCell>{$t('others')}</TableHeadCell>
+		<TableHeadCell>{$t('home_entrance')}</TableHeadCell>
+		<TableHeadCell>{$t('home_exit')}</TableHeadCell>
+		<TableHeadCell>{$t('contract')}</TableHeadCell>
+		<TableHeadCell>{$t('rent')}</TableHeadCell>
+		<TableHeadCell>{$t('note')}</TableHeadCell>
 	</TableHead>
 	<TableBody tableBodyClass="divide-y">
 		{#each studentWithRooms.studentRoom as studentWithRoom}
@@ -113,7 +118,7 @@
 						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
 							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
 							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.bafog}</TableBodyCell
+					>{studentWithRoom.student?.email}</TableBodyCell
 				>
 				<TableBodyCell
 					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
@@ -121,7 +126,7 @@
 						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
 							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
 							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.rent}</TableBodyCell
+					>{studentWithRoom.student?.telephone}</TableBodyCell
 				>
 				<TableBodyCell
 					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
@@ -129,7 +134,7 @@
 						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
 							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
 							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.homeEntrance}</TableBodyCell
+					>{studentWithRoom.student?.address}</TableBodyCell
 				>
 				<TableBodyCell
 					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
@@ -137,24 +142,17 @@
 						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
 							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
 							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.homeExit}</TableBodyCell
 				>
-				<TableBodyCell
-					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
-						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
-						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
-							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
-							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.contract}</TableBodyCell
-				>
-				<TableBodyCell
-					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
-						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
-						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
-							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
-							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.KotenjanHoca}</TableBodyCell
-				>
+					{#if studentWithRoom.student?.reason === 'studium'}
+						{$t('studium')}
+					{/if}
+					{#if studentWithRoom.student?.reason === 'sonstiges'}
+						{$t('others')}
+					{/if}
+					{#if studentWithRoom.student?.reason === 'praktikum'}
+						{$t('praktikum')}
+					{/if}
+				</TableBodyCell>
 				<TableBodyCell
 					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
 						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
@@ -193,7 +191,7 @@
 						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
 							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
 							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.telephone}</TableBodyCell
+					>{studentWithRoom.student?.bafog}</TableBodyCell
 				>
 				<TableBodyCell
 					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
@@ -201,7 +199,7 @@
 						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
 							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
 							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.email}</TableBodyCell
+					>{studentWithRoom.student?.company}</TableBodyCell
 				>
 				<TableBodyCell
 					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
@@ -209,7 +207,47 @@
 						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
 							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
 							: 'px-6 py-4 whitespace-nowrap font-medium'}
-					>{studentWithRoom.student?.address}</TableBodyCell
+					>{studentWithRoom.student?.others}</TableBodyCell
+				>
+				<TableBodyCell
+					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
+						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
+						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
+							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
+							: 'px-6 py-4 whitespace-nowrap font-medium'}
+					>{studentWithRoom.student?.homeEntrance}</TableBodyCell
+				>
+				<TableBodyCell
+					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
+						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
+						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
+							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
+							: 'px-6 py-4 whitespace-nowrap font-medium'}
+					>{studentWithRoom.student?.homeExit}</TableBodyCell
+				>
+				<TableBodyCell
+					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
+						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
+						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
+							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
+							: 'px-6 py-4 whitespace-nowrap font-medium'}
+					>{studentWithRoom.student?.contract}</TableBodyCell
+				>
+				<TableBodyCell
+					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
+						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
+						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
+							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
+							: 'px-6 py-4 whitespace-nowrap font-medium'}
+					>{studentWithRoom.student?.rent}</TableBodyCell
+				>
+				<TableBodyCell
+					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
+						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
+						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
+							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
+							: 'px-6 py-4 whitespace-nowrap font-medium'}
+					>{studentWithRoom.student?.notes}</TableBodyCell
 				>
 			</TableBodyRow>
 		{/each}

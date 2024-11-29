@@ -64,22 +64,25 @@ export async function getAllStudents() {
       firstname: student[1],
       lastname: student[2],
       birthday: student[3],
-      bafog: student[4],
-      rent: student[5],
-      homeEntrance: student[6],
-      homeExit: student[7],
-      contract: student[8],
-      KotenjanHoca: "-",
-      university: student[9],
-      course: student[10],
-      semester: student[11] + ". Semester",
-      universityTr: student[12],
-      telephone: student[13],
-      email: student[14],
-      address: student[15],
-      submit_date: student[16],
-      room_id: student[17],
-      isPassive: student[18]
+      email: student[4],
+      telephone: student[5],
+      address: student[6],
+      reason: student[7],
+      university: student[8] ?? '-',
+      course: student[9] ?? '-',
+      semester: student[10] === null ? '-' : student[10] + ". Semester",
+      universityTr: student[11] ?? '-',
+      bafog: student[12] ?? 0,
+      company: student[13] ?? '-',
+      others: student[14] ?? '-',
+      homeEntrance: student[15] ?? '-',
+      homeExit: student[16] ?? '-',
+      contract: student[17] ?? '-',
+      rent: student[18] ?? 0,
+      submit_date: student[19],
+      notes: student[20] ?? '-',
+      room_id: student[21],
+      isPassive: student[22]
     };
   });
   return students;
@@ -98,12 +101,14 @@ export async function getStudentsWithRooms() {
     };
   });
 
+
   const sortedStudentsWithRooms: SortedStudentsWithRooms[] = Array.from(roomLocations).map(location => {
     return {
       location: location,
       studentRoom: studentsWithRooms.filter(studentRoom => studentRoom.room.location === location)
     };
   });
+
 
   const studentsWithoutRooms = students
     .filter(student => !studentsWithRooms.some(studentRoom => studentRoom.student.id === student.id) && student.isPassive === false)
@@ -127,6 +132,7 @@ export async function getStudentsWithRooms() {
     }))
   });
 
+  console.log(sortedStudentsWithRooms);
   return sortedStudentsWithRooms;
 }
 
@@ -247,7 +253,7 @@ export function isDateNear(date: string): boolean {
   const currentDate = new Date();
   const diffTime = targetDate.getTime() - currentDate.getTime();
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-  return diffDays <= 7 && diffDays >= 0;
+  return diffDays <= 15 && diffDays >= 0;
 }
 
 export function isDateExceeded(date: string): boolean {
