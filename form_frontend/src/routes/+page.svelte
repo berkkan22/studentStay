@@ -501,6 +501,8 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 
 	h1 {
 		text-align: center;
+		font-size: 1.4rem;
+		margin-bottom: 1rem;
 	}
 
 	form {

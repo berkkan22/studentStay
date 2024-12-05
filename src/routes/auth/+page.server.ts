@@ -11,7 +11,7 @@ export const load: PageServerLoad = async (event) => {
       secure: true,
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24
+      maxAge: 60 * 60 * 24 * 30, // 30 days
     });
 
     // TODO: This call needs to go to /auth page.server.ts because if the user logges in in the /auth then the group should be check and removde
@@ -41,7 +41,7 @@ export const actions = {
       // Set the cookies
       cookies.set('session', newCookies, {
         path: '/',
-        maxAge: 60 * 60 * 24, // 1 day
+        maxAge: 60 * 60 * 24 * 30, // 30 days
         httpOnly: false, // Allow access via JavaScript if needed
         sameSite: 'lax',
         secure: true, // Set to true if you're on HTTPS
