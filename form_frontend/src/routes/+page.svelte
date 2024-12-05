@@ -278,7 +278,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	</div>
 	<div class="mb-6">
 		<Label for="birthday" class="mb-2">{$t('birthday')}</Label>
-		<Input type="date" id="birthday" placeholder="Flowbite" />
+		<Input type="date" id="birthday" />
 		{#if birthdayError}
 			<p class="ml-2 text-red-500">{$t('birthday_error')}</p>
 		{/if}
@@ -349,7 +349,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	</div>
 	<div class="mb-6">
 		<Label for="address" class="mb-2">{$t('address')}</Label>
-		<Input type="text" id="address" placeholder="john.doe@company.com" />
+		<Input type="text" id="address" placeholder="Müggenburg 20, 21129 Hamburg" />
 		{#if addressError}
 			<p class="ml-2 text-red-500">{$t('address_error')}</p>
 		{/if}
@@ -396,39 +396,39 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	{#if showUniversityFields}
 		<div class="mb-6">
 			<Label for="university" class="mb-2">{$t('university')}</Label>
-			<Input type="text" id="university" placeholder="Doe" />
+			<Input type="text" id="university" placeholder="Uni Hamburg" />
 			{#if universityError}
 				<p class="ml-2 text-red-500">{$t('university_error')}</p>
 			{/if}
 		</div>
 		<div class="mb-6">
 			<Label for="course" class="mb-2">{$t('course')}</Label>
-			<Input type="text" id="course" placeholder="Doe" />
+			<Input type="text" id="course" placeholder="Informatik" />
 			{#if courseError}
 				<p class="ml-2 text-red-500">{$t('course_error')}</p>
 			{/if}
 		</div>
 		<div class="mb-6">
 			<Label for="semester" class="mb-2">{$t('semester')}</Label>
-			<Input type="text" id="semester" placeholder="Doe" />
+			<Input type="text" id="semester" placeholder="5. Semester" />
 			{#if semesterError}
 				<p class="ml-2 text-red-500">{$t('semester_error')}</p>
 			{/if}
 		</div>
 		<div class="mb-6">
 			<Label for="university_tr" class="mb-2">{$t('university_tr')}</Label>
-			<Input type="text" id="university_tr" placeholder="Doe" />
+			<Input type="text" id="university_tr" placeholder="Istanbul Teknik Üniversitesi" />
 		</div>
 		<div class="mb-6">
 			<Label for="bafog" class="mb-2">{$t('bafog')}</Label>
-			<Input type="number" id="bafog" placeholder="Doe" />
+			<Input type="number" id="bafog" placeholder="400" />
 		</div>
 	{/if}
 
 	{#if showFirmField}
 		<div class="mb-6">
 			<Label for="firm" class="mb-2">{$t('company')}</Label>
-			<Input type="text" id="firm" placeholder="Doe" />
+			<Input type="text" id="firm" placeholder="EDEKA IT" />
 			{#if companyNameError}
 				<p class="ml-2 text-red-500">{$t('company_error')}</p>
 			{/if}
@@ -438,7 +438,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	{#if showSonstigesField}
 		<div class="mb-6">
 			<Label for="sonstigesLabel" class="mb-2">{$t('others')}*</Label>
-			<Input type="text" id="sonstigesInput" placeholder="Doe" />
+			<Input type="text" id="sonstigesInput" placeholder={$t('others')} />
 			{#if othersError}
 				<p class="ml-2 text-red-500">{$t('others_error')}</p>
 			{/if}
