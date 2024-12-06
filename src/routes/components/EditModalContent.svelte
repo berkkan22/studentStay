@@ -24,6 +24,7 @@
 			home_exit: (document.getElementById('homeExit') as HTMLInputElement).value,
 			contract: (document.getElementById('contract') as HTMLInputElement).value,
 			rent: (document.getElementById('rent') as HTMLInputElement).value,
+			language_course: (document.getElementById('sprachkurs') as HTMLInputElement).value,
 			note: (document.getElementById('notes') as HTMLInputElement).value
 		};
 		return updatedFields;
@@ -234,6 +235,19 @@
 				id="rent"
 				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
 				bind:value={selectedStudent.student.rent}
+			/>
+		</div>
+		<div>
+			<label
+				for="sprachkurs"
+				class="mb-2 block text-sm font-medium text-gray-900 dark:text-gray-300"
+				>{$t('sprachkurs')}</label
+			>
+			<input
+				type="text"
+				id="sprachkurs"
+				class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+				bind:value={selectedStudent.student.sprachkurs}
 			/>
 		</div>
 		<div>

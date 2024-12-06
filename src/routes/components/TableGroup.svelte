@@ -57,6 +57,7 @@
 		<TableHeadCell>{$t('home_exit')}</TableHeadCell>
 		<TableHeadCell>{$t('contract')}</TableHeadCell>
 		<TableHeadCell>{$t('rent')}</TableHeadCell>
+		<TableHeadCell>{$t('sprachkurs')}</TableHeadCell>
 		<TableHeadCell>{$t('note')}</TableHeadCell>
 	</TableHead>
 	<TableBody tableBodyClass="divide-y">
@@ -239,6 +240,14 @@
 							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
 							: 'px-6 py-4 whitespace-nowrap font-medium'}
 					>{studentWithRoom.student?.rent}</TableBodyCell
+				>
+				<TableBodyCell
+					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
+						? 'bg-yellow-200 px-6 py-4 whitespace-nowrap font-medium'
+						: isDateExceeded(studentWithRoom.student?.contract?.toString() || '')
+							? 'bg-red-200 px-6 py-4 whitespace-nowrap font-medium'
+							: 'px-6 py-4 whitespace-nowrap font-medium'}
+					>{studentWithRoom.student?.sprachkurs}</TableBodyCell
 				>
 				<TableBodyCell
 					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')

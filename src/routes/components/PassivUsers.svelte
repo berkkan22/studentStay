@@ -64,6 +64,7 @@
 				<TableHeadCell>{$t('home_exit')}</TableHeadCell>
 				<TableHeadCell>{$t('contract')}</TableHeadCell>
 				<TableHeadCell>{$t('rent')}</TableHeadCell>
+				<TableHeadCell>{$t('sprachkurs')}</TableHeadCell>
 				<TableHeadCell>{$t('note')}</TableHeadCell>
 			</TableHead>
 			<TableBody tableBodyClass="divide-y">
@@ -106,6 +107,7 @@
 							<TableBodyCell>{passivStudent.student?.homeExit}</TableBodyCell>
 							<TableBodyCell>{passivStudent.student?.contract}</TableBodyCell>
 							<TableBodyCell>{passivStudent.student?.rent}</TableBodyCell>
+							<TableBodyCell>{passivStudent.student?.sprachkurs}</TableBodyCell>
 							<TableBodyCell>{passivStudent.student?.notes}</TableBodyCell>
 						{/if}
 					</TableBodyRow>

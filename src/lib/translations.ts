@@ -41,6 +41,7 @@ export default {
     "setPassive": "Passive setzen",
     "setActive": "Aktiv setzen",
     "save": "Speichern",
+    "sprachkurs": "Sprachkurs",
   },
   Tr: {
     "language": "Türkçe",
@@ -84,5 +85,6 @@ export default {
     "setPassive": "Pasif yap",
     "setActive": "Aktif yap",
     "save": "Kaydet",
+    "sprachkurs": "Dil Kursu",
   },
 };

@@ -82,7 +82,8 @@ export async function getAllStudents() {
       submit_date: student[19],
       notes: student[20] ?? '-',
       room_id: student[21],
-      isPassive: student[22]
+      isPassive: student[22],
+      sprachkurs: student[23] ?? '-'
     };
   });
   return students;

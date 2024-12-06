@@ -22,6 +22,7 @@ export type Student = {
   notes: string | null;
   room_id: number | null;
   isPassive: boolean;
+  sprachkurs: string | null;
 };
 
 export type Room = {
@@ -63,5 +64,6 @@ export const dummyStudent: Student = {
   submit_date: "-",
   notes: "-",
   room_id: null,
-  isPassive: false
+  isPassive: false,
+  sprachkurs: "-"
 };

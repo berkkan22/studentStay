@@ -127,6 +127,7 @@
 				<TableHeadCell>{$t('contract')}</TableHeadCell>
 				<TableHeadCell>{$t('rent')}</TableHeadCell>
 				<TableHeadCell>{$t('note')}</TableHeadCell>
+				<TableHeadCell>{$t('sprachkurs')}</TableHeadCell>
 			</TableHead>
 			<TableBody tableBodyClass="divide-y">
 				<!-- <TableBodyRow slot="row" let:item> -->
@@ -168,6 +169,7 @@
 						<TableBodyCell>{studentWithRoom.student?.contract}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.rent}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.notes}</TableBodyCell>
+						<TableBodyCell>{studentWithRoom.student?.sprachkurs}</TableBodyCell>
 					</TableBodyRow>
 				{/each}
 			</TableBody>
