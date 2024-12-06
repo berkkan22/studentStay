@@ -44,6 +44,7 @@ export default {
     "company_error": "Bitte geben Sie den Namen Ihres Unternehmens ein",
     "others_error": "Bitte geben Sie den Grund ein",
     "fill_all": "Bitte füllen Sie alle Felder aus",
+    "sprachkurs": "Sprachkurs",
   },
   Tr: {
     "language": "Türkçe",
@@ -88,5 +89,6 @@ export default {
     "company_error": "Lütfen şirketinizin adını giriniz",
     "others_error": "Lütfen sebebinizi giriniz",
     "fill_all": "Lütfen tüm alanları doldurunuz",
+    "sprachkurs": "Dil Kursu",
   },
 };

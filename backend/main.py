@@ -168,15 +168,12 @@ async def register_user(user: Request):
         conn = psycopg2.connect(**config)
         cur = conn.cursor()
 
-
-# CREATE TABLE student (    id int NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY,    firstname varchar(255) NOT NULL,    lastname varchar(255) NOT NULL,    birthdate date NOT NULL,    email varchar(255) NOT NULL UNIQUE,    telephone varchar(255) NOT NULL UNIQUE,    address varchar(255) NOT NULL,    reason varchar NOT NULL,    university varchar(255),    course varchar(255),    semester int,    university_tr varchar(255),    bafog real,    company varchar(255),    others varchar(255),home_entrance date default NULL,    home_exit date default NULL,    contract date default NULL,    rent real default NULL,    sumbit_date date,    room_id int,   CONSTRAINT fk_room FOREIGN KEY (room_id) REFERENCES room (id))
-
         cur.execute("""
-            INSERT INTO student (firstname, lastname, birthday, email, telephone, address, reason, university, course, semester, university_tr, bafog, company, others, submit_date)
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            INSERT INTO student (firstname, lastname, birthday, email, telephone, address, reason, university, course, semester, university_tr, bafog, company, others, submit_date, home_entrance, home_exit, contract, language_course, rent)
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """, (
             user["firstname"], user["lastname"], user["birthday"], user["email"], user["telephone"], user["address"], user["reason"], user["university"], user["course"], clearSemester(
-                user["semester"]), user.get("university_tr"), user.get("bafog"), user.get("company"), user.get("others"), datetime.datetime.now()
+                user["semester"]), user.get("university_tr"), user.get("bafog"), user.get("company"), user.get("others"), datetime.datetime.now(), user.get("home_entrance"), user.get("home_exit"), user.get("contract"), user.get("sprachkurs"), user.get("rent")
         ))
 
         conn.commit()

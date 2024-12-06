@@ -9,6 +9,7 @@
 	import ditib from '$lib/images/ditib_logo_rgb.png';
 	import toast, { Toaster } from 'svelte-french-toast';
 
+	let loading = false;
 	let defaultModal = false;
 	let errorModal = false;
 	let isShowLanguages: boolean = false;
@@ -81,6 +82,7 @@
 
 	async function handleSubmit(event: Event) {
 		event.preventDefault();
+		loading = true;
 
 		// Pflicht
 		const firstName = (document.getElementById('first_name') as HTMLInputElement).value;
@@ -116,6 +118,14 @@
 		// Sonstiges pflicht
 		const sonstiges =
 			(document.getElementById('sonstigesInput') as HTMLInputElement)?.value || null;
+
+		// optional
+		const sprachkurs = (document.getElementById('sprachkurs') as HTMLInputElement)?.value || null;
+		const homeEntrance =
+			(document.getElementById('home_entrance') as HTMLInputElement)?.value || null;
+		const homeExit = (document.getElementById('home_exit') as HTMLInputElement)?.value || null;
+		const contract = (document.getElementById('contract') as HTMLInputElement)?.value || null;
+		const rent = parseFloat((document.getElementById('rent') as HTMLInputElement)?.value) || null;
 
 		if (reason === 'studium') {
 			universityError = !university;
@@ -162,7 +172,12 @@
 			university_tr: universityTr, // if reason is studium optinal
 			bafog: bafog, // if reason is studium optinal
 			company: firm, // if reason is praktikum required
-			others: sonstiges // if reason is sonstiges required
+			others: sonstiges, // if reason is sonstiges required
+			sprachkurs: sprachkurs, // optional
+			home_entrance: homeEntrance, // optional
+			home_exit: homeExit, // optional
+			contract: contract, // optional
+			rent: rent // optional
 		};
 
 		console.log(data);
@@ -180,22 +195,26 @@
 				const jsonResponse = await response.json();
 				if (jsonResponse['status'] == 'success') {
 					console.log('Successful');
+					loading = false;
 					defaultModal = true;
 					// popup success
 					// reset fields
 				} else {
+					loading = false;
 					errorModal = true;
 					errorMessage = jsonResponse['message'];
 					// popup fail try again
 					console.log('Something went wrong: ' + jsonResponse['message']);
 				}
 			} else {
+				loading = false;
 				errorModal = true;
 				errorMessage = 'Failed to submit form';
 				// popup fail try again
 				console.error('Failed to submit form');
 			}
 		} catch (error) {
+			loading = false;
 			errorModal = true;
 			errorMessage = error;
 			// popup fail try again
@@ -433,6 +452,10 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 				<p class="ml-2 text-red-500">{$t('company_error')}</p>
 			{/if}
 		</div>
+		<div class="mb-6">
+			<Label for="university_tr" class="mb-2">{$t('university_tr')}</Label>
+			<Input type="text" id="university_tr" placeholder="Istanbul Teknik Üniversitesi" />
+		</div>
 	{/if}
 
 	{#if showSonstigesField}
@@ -443,6 +466,33 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 				<p class="ml-2 text-red-500">{$t('others_error')}</p>
 			{/if}
 		</div>
+		<div class="mb-6">
+			<Label for="university_tr" class="mb-2">{$t('university_tr')}</Label>
+			<Input type="text" id="university_tr" placeholder="Istanbul Teknik Üniversitesi" />
+		</div>
+	{/if}
+
+	{#if selectedOption !== ''}
+		<div class="mb-6">
+			<Label for="sprachkurs" class="mb-2">{$t('sprachkurs')}</Label>
+			<Input type="text" id="sprachkurs" placeholder="Deutsch" />
+		</div>
+		<div class="mb-6">
+			<Label for="rent" class="mb-2">{$t('rent')}</Label>
+			<Input type="number" id="rent" placeholder="Doe" />
+		</div>
+		<div class="mb-6">
+			<Label for="home_entrance" class="mb-2">{$t('home_entrance')}</Label>
+			<Input type="date" id="home_entrance" placeholder="Doe" />
+		</div>
+		<div class="mb-6">
+			<Label for="home_exit" class="mb-2">{$t('home_exit')}</Label>
+			<Input type="date" id="home_exit" placeholder="Doe" />
+		</div>
+		<div class="mb-6">
+			<Label for="contract" class="mb-2">{$t('contract')}</Label>
+			<Input type="date" id="contract" placeholder="Doe" />
+		</div>
 	{/if}
 	<!-- <Checkbox class="mb-6 space-x-1 rtl:space-x-reverse">
 		I agree with the <A href="/" class="text-primary-700 hover:underline dark:text-primary-600"
@@ -451,6 +501,10 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	</Checkbox> -->
 	<Button type="submit">{$t('submit')}</Button>
 </form>
+
+{#if loading}
+	<div class="spinner"></div>
+{/if}
 
 <Modal
 	title={$t('popup_title_success')}
@@ -524,12 +578,6 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 		display: flex;
 		align-items: center;
 		margin-top: -6px;
-	}
-
-	.flag {
-		width: 15px;
-		height: 15px;
-		margin-right: 8px;
 	}
 
 	.language-button .arrow {
@@ -619,5 +667,27 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 
 	.vorwahl-option span {
 		margin-left: 8px;
+	}
+
+	.spinner {
+		border: 4px solid rgba(0, 0, 0, 0.1);
+		width: 36px;
+		height: 36px;
+		border-radius: 50%;
+		border-left-color: #09f;
+		animation: spin 1s ease infinite;
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
 	}
 </style>
