@@ -171,12 +171,20 @@ async def register_user(user: Request):
         cur.execute("""
             INSERT INTO student (firstname, lastname, birthday, email, telephone, address, reason, university, course, semester, university_tr, bafog, company, others, submit_date, home_entrance, home_exit, contract, language_course, rent)
             VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
+            RETURNING id
+
         """, (
             user["firstname"], user["lastname"], user["birthday"], user["email"], user["telephone"], user["address"], user["reason"], user["university"], user["course"], clearSemester(
                 user["semester"]), user.get("university_tr"), user.get("bafog"), user.get("company"), user.get("others"), datetime.datetime.now(), user.get("home_entrance"), user.get("home_exit"), user.get("contract"), user.get("sprachkurs"), user.get("rent")
         ))
 
         conn.commit()
+
+        studentId = cur.fetchone()[0]
+
+        if (user.get("wohnheim") and studentId):
+            result = await update_student_room_intern(studentId, user.get("wohnheim"))
+            print(result)
 
         cur.close()
         conn.close()
@@ -244,7 +252,6 @@ async def update_student_room(data: Request, api_key: str = Depends(get_api_key_
         """, (room_location,))
 
         room = cur.fetchone()
-        print(room)
         if room is not None:
             room_location = room[0]
         else:
@@ -255,6 +262,42 @@ async def update_student_room(data: Request, api_key: str = Depends(get_api_key_
             SET room_id = %s
             WHERE id = %s
         """, (room_location, student_id))
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        return {"status": "success", "message": "Student room updated successfully"}
+    except Exception as e:
+        return {"status": "fail", "message": str(e)}
+
+
+async def update_student_room_intern(studentId, roomLocation):
+    try:
+        conn = psycopg2.connect(**config)
+        cur = conn.cursor()
+
+        # get the next available room id for that location
+        cur.execute("""
+            SELECT r.id FROM room r
+            LEFT JOIN student s ON r.id = s.room_id
+            WHERE r.location = %s AND s.room_id IS NULL
+        """, (roomLocation,))
+
+        room = cur.fetchone()
+        if room is not None:
+            roomLocation = room[0]
+        else:
+            print(f"Student with id {
+                  studentId} wants to go into the room {roomLocation}")
+            return {"status": "fail", "message": "No available room found for the given location"}
+
+        cur.execute("""
+            UPDATE student
+            SET room_id = %s
+            WHERE id = %s
+        """, (roomLocation, studentId))
 
         conn.commit()
 

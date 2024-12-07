@@ -155,8 +155,11 @@
 							{/if}
 							{#if studentWithRoom.student?.reason === 'praktikum'}
 								{$t('praktikum')}
-							{/if}</TableBodyCell
-						>
+							{/if}
+							{#if studentWithRoom.student?.reason === 'sprachkurs'}
+								{$t('sprachkurs')}
+							{/if}
+						</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.university}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.course}</TableBodyCell>
 						<TableBodyCell>{studentWithRoom.student?.semester}</TableBodyCell>

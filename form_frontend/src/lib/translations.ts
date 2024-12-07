@@ -19,6 +19,7 @@ export default {
     "telephone": "Telefonnummer*",
     "email": "E-Mail Adresse*",
     "address": "Adresse*",
+    "reason": "Grund für den Aufenthalt in Hamburg*",
     "vorwahl": "+49",
     "popup_title_success": "Registrierung war erfolgreich",
     "popup_body_success": "Ihre Registrierung war erfolgreich. Vielen Danke!",
@@ -45,6 +46,8 @@ export default {
     "others_error": "Bitte geben Sie den Grund ein",
     "fill_all": "Bitte füllen Sie alle Felder aus",
     "sprachkurs": "Sprachkurs",
+    "sprachkurs_error": "Bitte geben Sie den Sprachkurs ein",
+    "wohnheim": "Wohnheim (nur ankreuzen wenn schon eingezogen)"
   },
   Tr: {
     "language": "Türkçe",
@@ -64,6 +67,7 @@ export default {
     "telephone": "Telefon Numarası*",
     "email": "Mail Adresi*",
     "address": "Asli Ikamet Adresi*",
+    "reason": "Hamburg'da kalma nedeni*",
     "vorwahl": "+90",
     "popup_title_success": "Kayıt Başarılı",
     "popup_body_success": "Kaydınız başarıyla tamamlandı. Teşekkür ederiz!",
@@ -90,5 +94,7 @@ export default {
     "others_error": "Lütfen sebebinizi giriniz",
     "fill_all": "Lütfen tüm alanları doldurunuz",
     "sprachkurs": "Dil Kursu",
+    "sprachkurs_error": "Lütfen dil kursu giriniz",
+    "wohnheim": "Öğrenci Evi (sadece eve taşındıysanız işaretleyin)"
   },
 };

@@ -18,6 +18,7 @@
 	let errorMessage = '';
 
 	let selectedOption = '';
+	let selectedWohnheim = '';
 	let firstNameError = false;
 	let lastNameError = false;
 	let birthdayError = false;
@@ -34,8 +35,11 @@
 
 	let othersError = false;
 
+	let sprachkursError = false;
+
 	$: showUniversityFields = selectedOption === 'studium';
 	$: showFirmField = selectedOption === 'praktikum';
+	$: showSprachkursField = selectedOption === 'sprachkurs';
 	$: showSonstigesField = selectedOption === 'sonstiges';
 
 	onMount(() => {
@@ -94,6 +98,7 @@
 			(document.getElementById('phone-input') as HTMLInputElement).value;
 		const address = (document.getElementById('address') as HTMLInputElement).value;
 		const reason = selectedOption;
+		const wohnheim = selectedWohnheim;
 
 		firstNameError = !firstName;
 		lastNameError = !lastName;
@@ -120,7 +125,8 @@
 			(document.getElementById('sonstigesInput') as HTMLInputElement)?.value || null;
 
 		// optional
-		const sprachkurs = (document.getElementById('sprachkurs') as HTMLInputElement)?.value || null;
+		const sprachkurs =
+			(document.getElementById('srachkursInput') as HTMLInputElement)?.value || null;
 		const homeEntrance =
 			(document.getElementById('home_entrance') as HTMLInputElement)?.value || null;
 		const homeExit = (document.getElementById('home_exit') as HTMLInputElement)?.value || null;
@@ -133,6 +139,8 @@
 			semesterError = !semester;
 		} else if (reason === 'praktikum') {
 			companyNameError = !firm;
+		} else if (reason === 'sprachkurs') {
+			sprachkursError = !sprachkurs;
 		} else if (reason === 'sonstiges') {
 			othersError = !sonstiges;
 		}
@@ -147,6 +155,7 @@
 			!reason ||
 			(reason === 'studium' && (!university || !course || !semester)) ||
 			(reason === 'praktikum' && !firm) ||
+			(reason === 'sprachkurs' && !sprachkurs) ||
 			(reason === 'sonstiges' && !sonstiges)
 		) {
 			window.scrollTo(0, 0);
@@ -155,6 +164,7 @@
 			toast.error($t('fill_all'), {
 				position: 'bottom-center'
 			});
+			loading = false;
 			return;
 		}
 
@@ -177,7 +187,8 @@
 			home_entrance: homeEntrance, // optional
 			home_exit: homeExit, // optional
 			contract: contract, // optional
-			rent: rent // optional
+			rent: rent, // optional
+			wohnheim: wohnheim
 		};
 
 		console.log(data);
@@ -228,6 +239,7 @@
 		inputs.forEach((input) => (input.value = ''));
 		errorMessage = '';
 		selectedOption = '';
+		selectedWohnheim = '';
 		window.scrollTo(0, 0);
 	}
 </script>
@@ -281,6 +293,53 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 </header>
 
 <form on:submit={handleSubmit}>
+	<div class="mb-4">
+		<Label for="wohnheimOptions" class="mb-2">{$t('wohnheim')}</Label>
+		<div>
+			<input
+				class="mb-2"
+				type="radio"
+				id="finkenwerder"
+				name="wohnheimOptions"
+				value="Finkenwerder"
+				bind:group={selectedWohnheim}
+			/>
+			<label for="finkenwerder">Finkenwerder</label>
+		</div>
+		<div>
+			<input
+				class="mb-2"
+				type="radio"
+				id="harburg"
+				name="wohnheimOptions"
+				value="Harburg"
+				bind:group={selectedWohnheim}
+			/>
+			<label for="harburg">Harburg</label>
+		</div>
+		<div>
+			<input
+				class="mb-2"
+				type="radio"
+				id="Wilhelmsburg"
+				name="wohnheimOptions"
+				value="Wilhelmsburg"
+				bind:group={selectedWohnheim}
+			/>
+			<label for="Wilhelmsburg">Wilhelmsburg</label>
+		</div>
+		<div>
+			<input
+				class="mb-2"
+				type="radio"
+				id="kiel"
+				name="wohnheimOptions"
+				value="Kiel"
+				bind:group={selectedWohnheim}
+			/>
+			<label for="kiel">Kiel</label>
+		</div>
+	</div>
 	<div class="mb-6">
 		<Label for="first_name" class="mb-2">{$t('first_name')}</Label>
 		<Input type="text" id="first_name" placeholder="John" />
@@ -374,7 +433,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 		{/if}
 	</div>
 	<div class="mb-6">
-		<Label for="option" class="mb-2">Grund für den Aufenthalt in Hamburg*</Label>
+		<Label for="option" class="mb-2">{$t('reason')}</Label>
 		<div>
 			<input
 				class="mb-2"
@@ -396,6 +455,17 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 				bind:group={selectedOption}
 			/>
 			<label for="praktikum">{$t('practice')}</label>
+		</div>
+		<div>
+			<input
+				class="mb-2"
+				type="radio"
+				id="sprachkurs"
+				name="option"
+				value="sprachkurs"
+				bind:group={selectedOption}
+			/>
+			<label for="sprachkurs">{$t('sprachkurs')}</label>
 		</div>
 		<div>
 			<input
@@ -458,6 +528,16 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 		</div>
 	{/if}
 
+	{#if showSprachkursField}
+		<div class="mb-6">
+			<Label for="sprachkursLabel" class="mb-2">{$t('sprachkurs')}*</Label>
+			<Input type="text" id="srachkursInput" placeholder={$t('sprachkurs')} />
+			{#if sprachkursError}
+				<p class="ml-2 text-red-500">{$t('sprachkurs_error')}</p>
+			{/if}
+		</div>
+	{/if}
+
 	{#if showSonstigesField}
 		<div class="mb-6">
 			<Label for="sonstigesLabel" class="mb-2">{$t('others')}*</Label>
@@ -473,10 +553,6 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	{/if}
 
 	{#if selectedOption !== ''}
-		<div class="mb-6">
-			<Label for="sprachkurs" class="mb-2">{$t('sprachkurs')}</Label>
-			<Input type="text" id="sprachkurs" placeholder="Deutsch" />
-		</div>
 		<div class="mb-6">
 			<Label for="rent" class="mb-2">{$t('rent')}</Label>
 			<Input type="number" id="rent" placeholder="Doe" />
@@ -544,6 +620,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 		justify-content: center;
 		align-items: baseline;
 		margin-top: 2rem;
+		margin-bottom: 2rem;
 	}
 
 	.logo {

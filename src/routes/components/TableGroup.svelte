@@ -152,6 +152,9 @@
 					{#if studentWithRoom.student?.reason === 'praktikum'}
 						{$t('praktikum')}
 					{/if}
+					{#if studentWithRoom.student?.reason === 'sprachkurs'}
+						{$t('sprachkurs')}
+					{/if}
 				</TableBodyCell>
 				<TableBodyCell
 					tdClass={isDateNear(studentWithRoom.student?.contract?.toString() || '')
