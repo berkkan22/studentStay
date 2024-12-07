@@ -508,10 +508,6 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 			<Label for="university_tr" class="mb-2">{$t('university_tr')}</Label>
 			<Input type="text" id="university_tr" placeholder="Istanbul Teknik Üniversitesi" />
 		</div>
-		<div class="mb-6">
-			<Label for="bafog" class="mb-2">{$t('bafog')}</Label>
-			<Input type="number" id="bafog" placeholder="400" />
-		</div>
 	{/if}
 
 	{#if showFirmField}
@@ -553,6 +549,10 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	{/if}
 
 	{#if selectedOption !== ''}
+		<div class="mb-6">
+			<Label for="bafog" class="mb-2">{$t('bafog')}</Label>
+			<Input type="number" id="bafog" placeholder="400" />
+		</div>
 		<div class="mb-6">
 			<Label for="rent" class="mb-2">{$t('rent')}</Label>
 			<Input type="number" id="rent" placeholder="Doe" />
