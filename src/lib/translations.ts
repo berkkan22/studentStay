@@ -42,6 +42,10 @@ export default {
     "setActive": "Aktiv setzen",
     "save": "Speichern",
     "sprachkurs": "Sprachkurs",
+    "delete": "Benutzer Löschen",
+    "are_you_sure": "Sind Sie sicher, dass Sie den Benutzer löschen möchten?",
+    "yes": "Ja",
+    "no": "Nein",
   },
   Tr: {
     "language": "Türkçe",
@@ -86,5 +90,9 @@ export default {
     "setActive": "Aktif yap",
     "save": "Kaydet",
     "sprachkurs": "Dil Kursu",
+    "delete": "Kullanıcıyı Sil",
+    "are_you_sure": "Kullanıcıyı silmekden emin misiniz?",
+    "yes": "Evet",
+    "no": "Hayir",
   },
 };

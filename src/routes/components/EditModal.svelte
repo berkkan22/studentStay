@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { StudentRoom } from '$lib/model';
 	import {
+		deleteStudent,
 		getStudentsWithRooms,
 		setStudentAktive,
 		setStudentPassiv,
@@ -17,6 +18,8 @@
 	let errorMessage = '';
 
 	let editModalContent;
+
+	let showConfirmation = false;
 
 	export function closeModal() {
 		showModal = false;
@@ -81,6 +84,30 @@
 			showProcessIndicator = false;
 		}
 	}
+
+	function confirmDelete() {
+		showConfirmation = true;
+	}
+
+	async function deleteUser() {
+		showProcessIndicator = true;
+		errorMessage = '';
+		try {
+			const res = await deleteStudent(selectedStudent.student?.id);
+			if (res['status'] === 'success') {
+				const data = await getStudentsWithRooms();
+				studentsWithRooms.set(data);
+				closeModal();
+			} else {
+				errorMessage = 'Failed to delete user. ' + res['message'];
+			}
+		} catch (error) {
+			errorMessage = 'Failed to delete student. ' + error;
+		} finally {
+			showProcessIndicator = false;
+			showConfirmation = false;
+		}
+	}
 </script>
 
 <Modal title={$t('editTitle')} color="form" bind:open={showModal} on:close={closeModal}>
@@ -93,6 +120,19 @@
 		<Button color="green" on:click={aktive}>{$t('setActive')}</Button>
 	{:else}
 		<Button color="yellow" on:click={passiv}>{$t('setPassive')}</Button>
+	{/if}
+	<Button class="ml-2" color="red" on:click={confirmDelete}>{$t('delete')}</Button>
+
+	{#if showConfirmation}
+		<div class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-75">
+			<div class="rounded bg-white p-6 shadow-lg">
+				<p>{$t('are_you_sure')}</p>
+				<div class="mt-4 flex justify-end">
+					<Button class="mr-2" on:click={() => (showConfirmation = false)}>{$t('no')}</Button>
+					<Button color="red" on:click={deleteUser}>{$t('yes')}</Button>
+				</div>
+			</div>
+		</div>
 	{/if}
 
 	<EditModalContent bind:this={editModalContent} {selectedStudent} />

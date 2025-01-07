@@ -261,3 +261,29 @@ export function isDateExceeded(date: string): boolean {
   const currentDate = new Date();
   return targetDate < currentDate;
 }
+
+export async function deleteStudent(studentId: number) {
+  const { validAccessToken } = await getValidAccessToken(getCookies());
+
+  const response = await fetch(`${config.apiUrl}/deleteStudent`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Token': `${validAccessToken}`
+    },
+    body: JSON.stringify({ studentId })
+  });
+
+  const res = await response.json();
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  if (res["status"] === "fail") {
+    console.log(res);
+    throw new Error(res["message"]);
+  }
+
+  return res;
+}

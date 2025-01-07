@@ -42,6 +42,8 @@
 	$: showSprachkursField = selectedOption === 'sprachkurs';
 	$: showSonstigesField = selectedOption === 'sonstiges';
 
+	let today = new Date().toISOString().split('T')[0];
+
 	onMount(() => {
 		$locale = getLocaleFromNavigator();
 		vorwahl = $locale;
@@ -356,7 +358,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 	</div>
 	<div class="mb-6">
 		<Label for="birthday" class="mb-2">{$t('birthday')}</Label>
-		<Input type="date" id="birthday" />
+		<Input type="date" id="birthday" min="1970-01-01" max={today} />
 		{#if birthdayError}
 			<p class="ml-2 text-red-500">{$t('birthday_error')}</p>
 		{/if}

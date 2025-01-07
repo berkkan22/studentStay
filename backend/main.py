@@ -394,6 +394,29 @@ async def update_student(data: Request, api_key: str = Depends(get_api_key_http)
         return {"status": "fail", "message": str(e)}
 
 
+@app.post("/deleteStudent")
+async def delete_student(data: Request, api_key: str = Depends(get_api_key_http)):
+    try:
+        data = await data.json()
+        student_id = data["studentId"]
+
+        conn = psycopg2.connect(**config)
+        cur = conn.cursor()
+
+        cur.execute("""
+            DELETE FROM student WHERE id = %s
+        """, (student_id,))
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        return {"status": "success", "message": "Student deleted successfully"}
+    except Exception as e:
+        return {"status": "fail", "message": str(e)}
+
+
 class TokenRefreshRequest(BaseModel):
     refresh_token: str
 
