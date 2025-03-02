@@ -7,8 +7,7 @@ services:
     ports:
       - "29595:80"
     networks:
-      projects:
-        ipv4_address: 192.169.4.1
+      project_net:
       intern:
         ipv4_address: 192.168.48.12
     restart: unless-stopped
@@ -22,8 +21,7 @@ services:
     ports:
       - "45637:3000"
     networks:
-      projects:
-        ipv4_address: 192.169.4.2
+      project_net:
     restart: unless-stopped
 
   form_frontend:
@@ -34,12 +32,11 @@ services:
     ports:
       - "58240:3000"
     networks:
-      projects:
-        ipv4_address: 192.169.4.3
+      project_net:
     restart: unless-stopped
 
 networks:
-  projects:
+  project_net:
     external: true
   intern:
     external: true
