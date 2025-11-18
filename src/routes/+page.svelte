@@ -21,7 +21,7 @@
 
 <Header />
 {#if loading}
-	<div class="absolute inset-0 flex flex-col items-center justify-center bg-white bg-opacity-75">
+	<div class="fixed inset-x-0 bottom-0 top-20 flex flex-col items-center justify-center">
 		<div class="mb-2 h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
 		<p>{$t('loading')}</p>
 	</div>

@@ -295,7 +295,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 </header>
 
 <form on:submit={handleSubmit}>
-	<div class="mb-4">
+	<!-- <div class="mb-4">
 		<Label for="wohnheimOptions" class="mb-2">{$t('wohnheim')}</Label>
 		<div>
 			<input
@@ -341,7 +341,7 @@ s7.794-1.581,10.606-4.394l149.996-150C331.465,94.749,331.465,85.251,325.607,79.3
 			/>
 			<label for="kiel">Kiel</label>
 		</div>
-	</div>
+	</div> -->
 	<div class="mb-6">
 		<Label for="first_name" class="mb-2">{$t('first_name')}</Label>
 		<Input type="text" id="first_name" placeholder="John" />

@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { t } from '$lib/i18n';
 	import type { SortedStudentsWithRooms, StudentRoom } from '$lib/model';
-	import { getAllRoomLocations, getStudentsWithRooms, updateStudentRoom } from '$lib/requests';
+	import {
+		getAllRoomLocations,
+		getStudentsWithRooms,
+		updateStudentRoom,
+		setStudentPassiv
+	} from '$lib/requests';
 	import { studentsWithRooms } from '$lib/store';
 	import {
 		Accordion,
@@ -64,9 +69,30 @@
 			showProcessIndicator = false;
 		}
 	}
+
+	async function markAsPassive() {
+		showProcessIndicator = true;
+		errorMessage = '';
+
+		try {
+			const res = await setStudentPassiv(selectedStudent.student?.id);
+			if (res['status'] === 'success') {
+				const data = await getStudentsWithRooms();
+				studentsWithRooms.set(data);
+				closeModal();
+			} else {
+				errorMessage = 'Failed to mark student as passive. ' + res['message'];
+			}
+		} catch (error) {
+			errorMessage = 'Failed to mark student as passive. ' + error;
+		} finally {
+			showProcessIndicator = false;
+		}
+	}
 </script>
 
 <Modal title={$t('addRoomTitle')} color="form" bind:open={editModal} on:close={() => closeModal()}>
+	<Button color="yellow" on:click={() => markAsPassive()}>{$t('setPassive')}</Button>
 	{#if showProcessIndicator}
 		<div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
 			<div class="h-16 w-16 animate-spin rounded-full border-b-2 border-gray-900"></div>
