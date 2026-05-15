@@ -37,6 +37,8 @@
 	<div class="spacer"></div>
 	<TableGroup studentWithRooms={$studentsWithRooms[3]} />
 	<div class="spacer"></div>
+	<TableGroup studentWithRooms={$studentsWithRooms[4]} />
+	<div class="spacer"></div>
 	<PassivUsers passivStudents={$studentsWithRooms[$studentsWithRooms.length - 1]} />
 {/if}
 
